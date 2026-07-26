@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivek Bakshi</title>
+  <meta name="description" content="Vivek Bakshi — LinkedIn and Twitter/X.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #1a1a1e;
+      --color-muted: #6b6b76;
+      --color-accent: #2563eb;
+      --color-accent-hover: #1d4ed8;
+      --color-border: #e5e5ea;
+      --radius: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--color-text);
+      background: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .name {
+      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .links {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <h1 class="name">Vivek Bakshi</h1>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/vivekbakshi/" target="_blank" rel="noopener" class="btn">LinkedIn</a>
+      <a href="https://twitter.com/vivekbakshi" target="_blank" rel="noopener" class="btn">Twitter / X</a>
+    </div>
+  </div>
+
+</body>
+</html>
