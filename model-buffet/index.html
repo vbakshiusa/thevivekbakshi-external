@@ -809,9 +809,9 @@
   </div>
 
   <div class="section-head">
-    <h2>Self-hosted agent frameworks</h2>
+    <h2>Always-on agents</h2>
   </div>
-  <p class="section-sub">Closer to Grok than to a router or an IDE plugin — a persistent agent that runs continuously and takes action on its own — except these run on your own machine and aren't locked to one lab's model.</p>
+  <p class="section-sub">A different job from a router or an IDE plugin — this is an agent that runs continuously on its own hardware and takes action without being asked each time. Hermes and OpenClaw do it self-hosted and model-neutral; Grok Bot does the same job as a locked-in hosted service.</p>
 
   <div class="table-wrap">
     <table class="enterprise">
@@ -819,7 +819,7 @@
         <tr>
           <th>Framework</th>
           <th class="tier-head">What it is</th>
-          <th class="tier-head">Runs on</th>
+          <th class="tier-head">Deployment</th>
           <th class="tier-head">Note</th>
         </tr>
       </thead>
@@ -827,7 +827,7 @@
         <tr>
           <th class="co-cell"><div class="co-name">Hermes Agent</div><div class="co-line">Nous Research · Feb 2026</div></th>
           <td class="ent-models">Self-hosted agent with persistent memory across sessions; codifies repeated successful tasks into reusable, human-readable skill files.</td>
-          <td class="ent-pick">Model-neutral — OpenRouter, OpenAI, Anthropic, or your own private endpoint</td>
+          <td class="ent-pick">Self-hosted<br>model-neutral — OpenRouter, OpenAI, Anthropic, or your own endpoint</td>
           <td class="ent-why">Claimed the #1 spot on OpenRouter by daily token usage within its first three months of release.
             <a href="https://hermes-agent.org/" target="_blank" rel="noopener">hermes-agent.org &rarr;</a>
           </td>
@@ -837,9 +837,19 @@
         <tr>
           <th class="co-cell"><div class="co-name">OpenClaw</div><div class="co-line">OpenClaw Foundation · MIT</div></th>
           <td class="ent-models">Self-hosted personal agent that executes real actions — shell commands, file management, web automation — via 100+ prebuilt AgentSkills, not just chat replies.</td>
-          <td class="ent-pick">Model-agnostic — connects to Claude, GPT, and others</td>
+          <td class="ent-pick">Self-hosted<br>model-agnostic — connects to Claude, GPT, and others</td>
           <td class="ent-why">Went from a November 2025 side project to 355K GitHub stars by April 2026; now stewarded by an independent non-profit foundation.
             <a href="https://openclaw.ai/" target="_blank" rel="noopener">openclaw.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-agentfw)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Grok Bot</div><div class="co-line">xAI</div></th>
+          <td class="ent-models">An "always-on teammate," not a chat window — runs continuously on its own cloud machine to work sales outbound, CRM updates, email, expense handling, and bug reproduction end to end.</td>
+          <td class="ent-pick">Hosted SaaS only<br>runs on xAI's cloud, not self-hostable or model-choosable</td>
+          <td class="ent-why">Same always-on job as Hermes and OpenClaw, but vendor-locked: access requires a SuperGrok, Cursor Pro, or Cursor Teams subscription.
+            <a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener">x.ai &rarr;</a>
           </td>
         </tr>
       </tbody>
@@ -849,7 +859,7 @@
   <div class="section-head">
     <h2>Consumer &amp; embedded assistants</h2>
   </div>
-  <p class="section-sub">Your "Grok bot" category — assistants that live where people already are, not inside an IDE or an API call.</p>
+  <p class="section-sub">Assistants that answer inside an app you're already in — a social feed, an inbox, an office suite — rather than a coding tool, an API call, or an always-on background agent.</p>
 
   <div class="table-wrap">
     <table class="enterprise">
@@ -863,10 +873,10 @@
       </thead>
       <tbody style="--co:var(--c-consumer)">
         <tr>
-          <th class="co-cell"><div class="co-name">Grok</div><div class="co-line">xAI</div></th>
+          <th class="co-cell"><div class="co-name">Grok (chat)</div><div class="co-line">xAI</div></th>
           <td class="ent-models">X app, grok.com, standalone mobile app.</td>
           <td class="ent-pick">Real-time / social context</td>
-          <td class="ent-why">Plugged directly into the X firehose, so it knows what's happening before it hits the news; Aurora Voice adds near real-time spoken conversation.
+          <td class="ent-why">Plugged directly into the X firehose, so it knows what's happening before it hits the news; Aurora Voice adds near real-time spoken conversation. Not to be confused with Grok Bot, xAI's separate always-on agent (see Always-on agents above).
             <a href="https://sintra.ai/blog/grok-vs-chatgpt-vs-gemini" target="_blank" rel="noopener">sintra.ai &rarr;</a>
           </td>
         </tr>
@@ -930,6 +940,7 @@
       <a href="https://www.techrepublic.com/article/news-ai-chatbot-cheat-sheet-overview/">techrepublic.com</a>
       <a href="https://hermes-agent.org/">hermes-agent.org</a>
       <a href="https://openclaw.ai/">openclaw.ai</a>
+      <a href="https://x.ai/news/introducing-grok-bot">x.ai/grok-bot</a>
     </div>
   </footer>
 
