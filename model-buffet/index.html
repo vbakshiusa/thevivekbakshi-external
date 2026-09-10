@@ -36,6 +36,7 @@
     --c-router:#7A5FA0;
     --c-consumer:#4A7A6E;
     --c-agentfw:#3E7A6B;
+    --c-cua:#8C6B3E;
   }
 
   @media (prefers-color-scheme: dark){
@@ -73,6 +74,7 @@
       --c-router:#B79FDE;
       --c-consumer:#8FC7B8;
       --c-agentfw:#7ECBB8;
+      --c-cua:#D4B27C;
     }
   }
   :root[data-theme="dark"]{
@@ -109,6 +111,7 @@
     --c-router:#B79FDE;
     --c-consumer:#8FC7B8;
     --c-agentfw:#7ECBB8;
+    --c-cua:#D4B27C;
   }
 
   *{box-sizing:border-box;}
@@ -809,6 +812,54 @@
   </div>
 
   <div class="section-head">
+    <h2>Computer-use &amp; browser agents</h2>
+  </div>
+  <p class="section-sub">A model actually operating a screen — reading pixels or the accessibility tree, then clicking, typing, and scrolling like a person would. On-demand, inside a session you're watching, rather than running unattended in the background.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th class="tier-head">What it does</th>
+          <th class="tier-head">Access</th>
+          <th class="tier-head">Note</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-cua)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Claude Computer Use</div><div class="co-line">Anthropic</div></th>
+          <td class="ent-models">Two tools: computer use reads a screenshot and drives the mouse/keyboard; browser use reads the accessibility tree instead of pixels for web-specific tasks.</td>
+          <td class="ent-pick">API — GA since Aug 2026, on Sonnet 5, Opus 5, Fable 5, and Opus 4.8</td>
+          <td class="ent-why">Paired with the Skills and Files APIs so an agent can apply a reusable procedure and hand back a finished file, not just a screenshot trace.
+            <a href="https://claude.com/blog/computer-use-skills-api-files-api" target="_blank" rel="noopener">claude.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-cua)">
+        <tr>
+          <th class="co-cell"><div class="co-name">ChatGPT Agent</div><div class="co-line">OpenAI · was Operator / CUA</div></th>
+          <td class="ent-models">The original Computer-Using Agent model that powered the standalone Operator product; Operator was shut down in Aug 2025 and folded into "agent mode" inside ChatGPT.</td>
+          <td class="ent-pick">ChatGPT composer, Plus plans and up ($20/mo+)</td>
+          <td class="ent-why">OpenAI's own Atlas browser is being deprecated (stops working Aug 9, 2026), with its browser-agentic capability consolidating into ChatGPT and Codex instead.
+            <a href="https://presenc.ai/research/openai-operator-update-tracker-2026" target="_blank" rel="noopener">presenc.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-cua)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Comet</div><div class="co-line">Perplexity</div></th>
+          <td class="ent-models">An AI-native browser, not an API — the assistant sits inside every tab and can navigate, fill forms, compare prices across sites, and book things on its own.</td>
+          <td class="ent-pick">Free browser app — Windows, Mac, iOS, Android</td>
+          <td class="ent-why">Launched at $200/month in July 2025; Perplexity dropped the paywall entirely on March 18, 2026, making it the only fully free agentic browser.
+            <a href="https://www.switchtools.io/blog/perplexity-comet-ai-agent-browser" target="_blank" rel="noopener">switchtools.io &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head">
     <h2>Always-on agents</h2>
   </div>
   <p class="section-sub">A different job from a router or an IDE plugin — this is an agent that runs continuously on its own hardware and takes action without being asked each time. Hermes and OpenClaw do it self-hosted and model-neutral; Grok Bot does the same job as a locked-in hosted service.</p>
@@ -859,7 +910,7 @@
   <div class="section-head">
     <h2>Consumer &amp; embedded assistants</h2>
   </div>
-  <p class="section-sub">Assistants that answer inside an app you're already in — a social feed, an inbox, an office suite — rather than a coding tool, an API call, or an always-on background agent.</p>
+  <p class="section-sub">Assistants that answer inside an app you're already in — a social feed, an inbox, an office suite — rather than a coding tool, an API call, a browser agent, or an always-on background agent.</p>
 
   <div class="table-wrap">
     <table class="enterprise">
@@ -941,6 +992,9 @@
       <a href="https://hermes-agent.org/">hermes-agent.org</a>
       <a href="https://openclaw.ai/">openclaw.ai</a>
       <a href="https://x.ai/news/introducing-grok-bot">x.ai/grok-bot</a>
+      <a href="https://claude.com/blog/computer-use-skills-api-files-api">claude.com/computer-use</a>
+      <a href="https://presenc.ai/research/openai-operator-update-tracker-2026">presenc.ai/operator</a>
+      <a href="https://www.switchtools.io/blog/perplexity-comet-ai-agent-browser">switchtools.io/comet</a>
     </div>
   </footer>
 
