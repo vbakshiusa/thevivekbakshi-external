@@ -1,0 +1,936 @@
+<title>Model Buffet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#F3F4F1;
+    --surface:#FFFFFF;
+    --surface-soft:#EDEFEA;
+    --ink:#1B1F1E;
+    --ink-soft:#52605A;
+    --ink-faint:#7C8880;
+    --accent:#2F6F5E;
+    --accent-soft:#DCE8E3;
+    --line:#D8DAD3;
+    --line-strong:#BFC4BC;
+
+    --c-anthropic:#A6693A;
+    --c-openai:#3E7CA6;
+    --c-google:#6B8F3E;
+    --c-xai:#8C5A8C;
+    --c-meta:#4C5FA0;
+    --c-deepseek:#8A7A45;
+    --c-qwen:#B15C4E;
+    --c-mistral:#4E8C82;
+
+    --c-copilot:#3B4A63;
+    --c-cursor:#5B5FA6;
+    --c-devin:#A64B3F;
+    --c-windsurf:#3E8FA0;
+    --c-claudecode:#96562E;
+    --c-cline:#5C8C4E;
+    --c-aider:#6B7280;
+    --c-replit:#B15A3E;
+    --c-amazonq:#B2793A;
+
+    --c-router:#7A5FA0;
+    --c-consumer:#4A7A6E;
+    --c-agentfw:#3E7A6B;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181A;
+      --surface:#1B211E;
+      --surface-soft:#212722;
+      --ink:#ECEFE9;
+      --ink-soft:#9BA8A1;
+      --ink-faint:#6E7A73;
+      --accent:#6FD1B0;
+      --accent-soft:#22332C;
+      --line:#2A312D;
+      --line-strong:#3A423C;
+
+      --c-anthropic:#CC9260;
+      --c-openai:#77A9CC;
+      --c-google:#9BBF6C;
+      --c-xai:#B889B8;
+      --c-meta:#8896CC;
+      --c-deepseek:#BBA968;
+      --c-qwen:#D08D7C;
+      --c-mistral:#7EBAAF;
+
+      --c-copilot:#8C9BB5;
+      --c-cursor:#A6A9DE;
+      --c-devin:#D48A7E;
+      --c-windsurf:#7EC3D4;
+      --c-claudecode:#D19E70;
+      --c-cline:#9BCC85;
+      --c-aider:#A8ADB5;
+      --c-replit:#DE9478;
+      --c-amazonq:#DEAE72;
+
+      --c-router:#B79FDE;
+      --c-consumer:#8FC7B8;
+      --c-agentfw:#7ECBB8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181A;
+    --surface:#1B211E;
+    --surface-soft:#212722;
+    --ink:#ECEFE9;
+    --ink-soft:#9BA8A1;
+    --ink-faint:#6E7A73;
+    --accent:#6FD1B0;
+    --accent-soft:#22332C;
+    --line:#2A312D;
+    --line-strong:#3A423C;
+
+    --c-anthropic:#CC9260;
+    --c-openai:#77A9CC;
+    --c-google:#9BBF6C;
+    --c-xai:#B889B8;
+    --c-meta:#8896CC;
+    --c-deepseek:#BBA968;
+    --c-qwen:#D08D7C;
+    --c-mistral:#7EBAAF;
+
+    --c-copilot:#8C9BB5;
+    --c-cursor:#A6A9DE;
+    --c-devin:#D48A7E;
+    --c-windsurf:#7EC3D4;
+    --c-claudecode:#D19E70;
+    --c-cline:#9BCC85;
+    --c-aider:#A8ADB5;
+    --c-replit:#DE9478;
+    --c-amazonq:#DEAE72;
+
+    --c-router:#B79FDE;
+    --c-consumer:#8FC7B8;
+    --c-agentfw:#7ECBB8;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  }
+  .page{
+    max-width:1180px;
+    margin:0 auto;
+    padding:56px 24px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  .masthead{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:36px;
+    max-width:760px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  h1{
+    font-family:'Fraunces', Georgia, serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(34px,5vw,50px);
+    line-height:1.05;
+    margin:0;
+    text-wrap:balance;
+    letter-spacing:-0.01em;
+  }
+  .dek{
+    font-size:16px;
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:4px 0 0;
+  }
+  .meta-row{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-top:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- Quick pick ---------- */
+  .quickpick{
+    margin-top:8px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .quickpick-head{
+    padding:14px 20px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-soft);
+  }
+  .quickpick-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    margin:0;
+  }
+  .qp-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  @media (max-width:640px){ .qp-grid{grid-template-columns:1fr;} }
+  .qp-item{
+    padding:13px 20px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:14px;
+  }
+  .qp-item:nth-child(odd){ border-right:1px solid var(--line); }
+  .qp-grid .qp-item:last-child,
+  .qp-grid .qp-item:nth-last-child(2){ border-bottom:none; }
+  .qp-need{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .qp-ans{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    text-align:right;
+    white-space:nowrap;
+  }
+
+  /* ---------- Section heads ---------- */
+  .section-head{
+    margin:52px 0 16px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:24px;
+    margin:0;
+  }
+  .section-head .axis{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    color:var(--ink-faint);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .axis .arrow{ color:var(--accent); }
+  .section-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    max-width:70ch;
+    margin:-6px 0 16px;
+    line-height:1.5;
+  }
+
+  /* ---------- Tables (shared) ---------- */
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--surface);
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+  }
+  table.matrix{ min-width:980px; }
+  table.enterprise{ min-width:900px; }
+
+  table thead th{
+    position:sticky;
+    top:0;
+    background:var(--surface-soft);
+    text-align:left;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:13px 16px;
+    border-bottom:1px solid var(--line-strong);
+    white-space:nowrap;
+  }
+  table thead th.tier-head{ border-left:1px solid var(--line); }
+  table thead th:first-child{ min-width:150px; }
+
+  table td, table th.co-cell{
+    padding:12px 16px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table td{ border-left:1px solid var(--line); }
+  table th.co-cell{
+    text-align:left;
+    border-left:4px solid var(--co, var(--line-strong));
+  }
+  table tbody tr:last-child td,
+  table tbody tr:last-child th.co-cell{ border-bottom:none; }
+
+  .co-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .co-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.03em;
+    color:var(--co, var(--ink-faint));
+    margin-top:2px;
+  }
+
+  .cell-model{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    color:var(--ink);
+    line-height:1.35;
+  }
+  .cell-spec{
+    font-family:'IBM Plex Mono', monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:11px;
+    color:var(--ink-faint);
+    margin-top:3px;
+  }
+  .cell-review{
+    font-size:11.5px;
+    line-height:1.42;
+    color:var(--ink-soft);
+    margin-top:7px;
+    max-width:26ch;
+  }
+  .cell-review a{
+    display:inline-block;
+    margin-top:3px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    color:var(--co, var(--accent));
+    text-decoration:none;
+    border-bottom:1px dotted var(--co, var(--accent));
+  }
+  .cell-review a:hover{ border-bottom-style:solid; }
+  .cell-empty{
+    color:var(--line-strong);
+    font-size:13px;
+  }
+
+  /* ---------- Enterprise table ---------- */
+  .ent-models{
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    max-width:26ch;
+  }
+  .ent-pick{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink);
+    line-height:1.55;
+    max-width:24ch;
+  }
+  .ent-why{
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    max-width:30ch;
+  }
+  .ent-why a{
+    display:inline-block;
+    margin-top:5px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    color:var(--co, var(--accent));
+    text-decoration:none;
+    border-bottom:1px dotted var(--co, var(--accent));
+  }
+  .ent-why a:hover{ border-bottom-style:solid; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top:56px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  footer p{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    line-height:1.6;
+    margin:0;
+    max-width:70ch;
+  }
+  footer .sources{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 14px;
+  }
+  footer .sources a{ color:var(--ink-faint); }
+
+  a{ color:inherit; }
+  code{
+    font-family:'IBM Plex Mono', monospace;
+    background:var(--surface-soft);
+    padding:1px 5px;
+    border-radius:3px;
+    font-size:0.92em;
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">Field guide · frontier &amp; open models</div>
+    <h1>Model Buffet</h1>
+    <p class="dek">A working cheat sheet across the labs that matter right now — from the quick, cheap counter items to the five-course flagship reasoning.</p>
+    <div class="meta-row">
+      <span>Snapshot: Sept 2026</span>
+      <span>Moves fast — recheck pricing before you budget on it</span>
+    </div>
+  </header>
+
+  <div class="quickpick">
+    <div class="quickpick-head"><h2>If you need to&hellip;</h2></div>
+    <div class="qp-grid">
+      <div class="qp-item"><span class="qp-need">Hardest coding / long agent runs</span><span class="qp-ans">GPT&#8209;6 Astra · Opus 5 · Grok 4.6</span></div>
+      <div class="qp-item"><span class="qp-need">Daily driver, best speed/IQ balance</span><span class="qp-ans">Sonnet 5 · GPT&#8209;5.4</span></div>
+      <div class="qp-item"><span class="qp-need">Fastest & cheapest, still sharp</span><span class="qp-ans">Haiku 4.5 · Flash&#8209;Lite</span></div>
+      <div class="qp-item"><span class="qp-need">Feeding it a huge document set</span><span class="qp-ans">Llama 4 Scout (10M)</span></div>
+      <div class="qp-item"><span class="qp-need">Real-time web / social context</span><span class="qp-ans">Grok 4.20</span></div>
+      <div class="qp-item"><span class="qp-need">Deep inside Gmail/Docs/Workspace</span><span class="qp-ans">Gemini 3.1 Pro</span></div>
+      <div class="qp-item"><span class="qp-need">Self-hosting on a budget</span><span class="qp-ans">DeepSeek V4 Pro</span></div>
+      <div class="qp-item"><span class="qp-need">Math & competition-grade reasoning</span><span class="qp-ans">Qwen 3.6</span></div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Tier matrix</h2>
+    <div class="axis">cheap / fast <span class="arrow">&rarr;</span> expensive / deep-thinking</div>
+  </div>
+  <p class="section-sub">Each cell carries a plain-language read of what reviewers actually say about that model, linked back to where it came from.</p>
+
+  <div class="table-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Company · line</th>
+          <th class="tier-head">Fast &amp; cheap</th>
+          <th class="tier-head">Balanced</th>
+          <th class="tier-head">Advanced</th>
+          <th class="tier-head">Flagship / deep reasoning</th>
+        </tr>
+      </thead>
+
+      <tbody style="--co:var(--c-anthropic)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Anthropic</div><div class="co-line">Claude</div></th>
+          <td>
+            <div class="cell-model">Haiku 4.5</div><div class="cell-spec">200K ctx · $1 / $5</div>
+            <div class="cell-review">Fast and cheap with near-frontier smarts — reviewers call it the pick when volume beats peak IQ.<br><a href="https://www.secondtalent.com/resources/every-claude-ai-model-explained-compared/" target="_blank" rel="noopener">secondtalent.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Sonnet 5</div><div class="cell-spec">1M ctx · $3 / $15</div>
+            <div class="cell-review">Emerging as the forum-consensus daily driver — full 1M context at a fraction of Opus's price.<br><a href="https://theaicareerlab.com/blog/which-claude-model-should-you-use" target="_blank" rel="noopener">theaicareerlab.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Opus 5</div><div class="cell-spec">1M ctx · $5 / $25</div>
+            <div class="cell-review">Testers still hand it the hardest coding and longest agent runs even as Sonnet closes in.<br><a href="https://tech-insider.org/claude-opus-vs-sonnet-vs-haiku-2026/" target="_blank" rel="noopener">tech-insider.org &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Fable 5.1</div><div class="cell-spec">index leader</div>
+            <div class="cell-review">Currently tops the Artificial Analysis Intelligence Index, ahead of Opus on raw benchmark score.<br><a href="https://techiehub.blog/best-ai-models-compared/" target="_blank" rel="noopener">techiehub.blog &rarr;</a></div>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-openai)">
+        <tr>
+          <th class="co-cell" rowspan="4"><div class="co-name">OpenAI</div><div class="co-line">GPT</div></th>
+          <td>
+            <div class="cell-model">o4-mini</div><div class="cell-spec">reasoning, lite</div>
+            <div class="cell-review">The budget entry to OpenAI's dedicated reasoning line, for smaller step-by-step problems.<br><a href="https://help.openai.com/en/articles/9624314-model-release-notes" target="_blank" rel="noopener">help.openai.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">o3</div><div class="cell-spec">reasoning</div>
+            <div class="cell-review">Deliberate, methodical reasoning — traded for speed against the mainline GPT-5.x models.<br><a href="https://help.openai.com/en/articles/9624314-model-release-notes" target="_blank" rel="noopener">help.openai.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">o3-pro</div><div class="cell-spec">reasoning, deliberate</div>
+            <div class="cell-review">The slowest, most careful setting in the o-series — reached for math and formal proofs.<br><a href="https://help.openai.com/en/articles/9624314-model-release-notes" target="_blank" rel="noopener">help.openai.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+        <tr>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">GPT-5.4</div><div class="cell-spec">tools, spreadsheets, docs</div>
+            <div class="cell-review">Praised for tying reasoning, coding and cross-tool agentic work into professional workflows.<br><a href="https://www.secondtalent.com/resources/every-openai-model-explained-compared/" target="_blank" rel="noopener">secondtalent.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">GPT-5.5</div><div class="cell-spec">code, research, data</div>
+            <div class="cell-review">Reviewed as the do-everything model — code, research, spreadsheets, and tool-use in one session.<br><a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener">openai.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">GPT-5.6</div><div class="cell-spec">everyday frontier pick</div>
+            <div class="cell-review">Named the closest everyday rival to Claude Opus 5 in cross-lab benchmark roundups.<br><a href="https://techiehub.blog/best-ai-models-compared/" target="_blank" rel="noopener">techiehub.blog &rarr;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">GPT-5.3-Codex</div><div class="cell-spec">repo-aware coding</div>
+            <div class="cell-review">Built specifically for repo-aware coding — searching codebases, running terminal commands, fixing its own output.<br><a href="https://www.secondtalent.com/resources/every-openai-model-explained-compared/" target="_blank" rel="noopener">secondtalent.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+        <tr>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">GPT-6 Astra</div><div class="cell-spec">$10 / $50 · new generation</div>
+            <div class="cell-review">OpenAI's newest generation, not another point release — framed as a computer operator that can use screens, code, and run cyber and long-context work.<br><a href="https://techcrunch.com/2026/09/03/openai-launches-astra-its-powerful-and-controversial-new-model/" target="_blank" rel="noopener">techcrunch.com &rarr;</a></div>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-google)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Google</div><div class="co-line">Gemini</div></th>
+          <td>
+            <div class="cell-model">3.5 Flash-Lite</div><div class="cell-spec">1M ctx · $0.30 / $2.50</div>
+            <div class="cell-review">Reviewed as the cheapest usable Gemini — reach for it on simple, high-volume extraction jobs.<br><a href="https://felloai.com/ultimate-gemini-model-comparison/" target="_blank" rel="noopener">felloai.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">3.7 Flash</div><div class="cell-spec">1M ctx · coding/agents start</div>
+            <div class="cell-review">Called out as the model to start on for coding and agent-building inside Gemini.<br><a href="https://www.datacamp.com/blog/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber" target="_blank" rel="noopener">datacamp.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">3.8 Flash</div><div class="cell-spec">1M ctx · $0.75 / $3.75</div>
+            <div class="cell-review">The newest Flash release, reviewed as the best quality-per-dollar pick for production traffic.<br><a href="https://www.datacamp.com/blog/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber" target="_blank" rel="noopener">datacamp.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">3.1 Pro</div><div class="cell-spec">1M ctx · 77.1% ARC-AGI-2</div>
+            <div class="cell-review">Holds the family's top reasoning scores and is recommended for complex multi-step agentic work.<br><a href="https://platform.teamai.com/blog/large-language-models-llms/gemini-models-explained-the-complete-2026-guide/" target="_blank" rel="noopener">teamai.com &rarr;</a></div>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-xai)">
+        <tr>
+          <th class="co-cell" rowspan="2"><div class="co-name">xAI</div><div class="co-line">Grok</div></th>
+          <td>
+            <div class="cell-model">Grok 4.1 Fast</div><div class="cell-spec">2M ctx · $0.20 / $0.50</div>
+            <div class="cell-review">Cheapest Grok with a 2M window — reviewers peg it for bulk, low-stakes jobs.<br><a href="https://www.secondtalent.com/resources/every-grok-ai-model-explained-compared/" target="_blank" rel="noopener">secondtalent.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Grok 4.3</div><div class="cell-spec">1M ctx · $1.25 / $2.50</div>
+            <div class="cell-review">Still rated the strongest choice for long documents, native video input, and generating PDFs or slides.<br><a href="https://techjacksolutions.com/ai-tools/grok/what-is-grok-4-3/" target="_blank" rel="noopener">techjacksolutions.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Grok 4.5</div><div class="cell-spec">500K ctx · $2 / $6</div>
+            <div class="cell-review">The prior flagship, a 1.5T-parameter MoE tuned specifically for coding and agent work.<br><a href="https://www.ai-toolbox.co/grok-models/grok-models-explained-2026" target="_blank" rel="noopener">ai-toolbox.co &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Grok 4.6</div><div class="cell-spec">500K ctx · Opus-class</div>
+            <div class="cell-review">xAI's newest flagship — reviewed as Opus-class on coding and agentic benchmarks.<br><a href="https://www.ai-toolbox.co/grok-models/grok-models-explained-2026" target="_blank" rel="noopener">ai-toolbox.co &rarr;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">Grok 4.20</div><div class="cell-spec">2M ctx · live X access</div>
+            <div class="cell-review">Praised for the largest context window in the Grok line plus live access to X for research.<br><a href="https://www.ai-toolbox.co/grok-models/grok-models-explained-2026" target="_blank" rel="noopener">ai-toolbox.co &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-meta)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Meta</div><div class="co-line">Llama 4 · open weight</div></th>
+          <td>
+            <div class="cell-model">Llama 4 Scout</div><div class="cell-spec">10M ctx · single-GPU</div>
+            <div class="cell-review">Called out for a 10M-token window and single-GPU deployability unmatched elsewhere in the field.<br><a href="https://codersera.com/blog/best-open-source-llm-2026-llama-4-qwen-3-5-deepseek-v4-gemma-4-mistral/" target="_blank" rel="noopener">codersera.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">Llama 4 Maverick</div><div class="cell-spec">400B/17B active · 1M ctx</div>
+            <div class="cell-review">Benchmarked ahead of GPT-4o on major evals at a fraction of the inference cost.<br><a href="https://tech-insider.org/llama-4-maverick-vs-mistral-large-3-vs-deepseek-v4-pro-2026/" target="_blank" rel="noopener">tech-insider.org &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-deepseek)">
+        <tr>
+          <th class="co-cell"><div class="co-name">DeepSeek</div><div class="co-line">open weight · MIT</div></th>
+          <td>
+            <div class="cell-model">DeepSeek R1</div><div class="cell-spec">$0.55 / 1M in · reasoning</div>
+            <div class="cell-review">Reviewed as GPT-4-class reasoning at a small fraction of frontier API pricing.<br><a href="https://www.miniloop.ai/blog/best-open-source-llms-2026" target="_blank" rel="noopener">miniloop.ai &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">DeepSeek V4 Pro</div><div class="cell-spec">#1 open agentic score</div>
+            <div class="cell-review">Ranked first among open-weight models on the Artificial Analysis agentic index.<br><a href="https://codersera.com/blog/best-open-source-llm-2026-llama-4-qwen-3-5-deepseek-v4-gemma-4-mistral/" target="_blank" rel="noopener">codersera.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-qwen)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Qwen</div><div class="co-line">open weight</div></th>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td>
+            <div class="cell-model">Qwen 3.6</div><div class="cell-spec">85.7% AIME · 77.2% GPQA</div>
+            <div class="cell-review">Leads the open-weight field on math and graduate-level reasoning benchmarks.<br><a href="https://codersera.com/blog/best-open-source-llm-2026-llama-4-qwen-3-5-deepseek-v4-gemma-4-mistral/" target="_blank" rel="noopener">codersera.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+      </tbody>
+
+      <tbody style="--co:var(--c-mistral)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Mistral</div><div class="co-line">open weight · Apache 2.0</div></th>
+          <td>
+            <div class="cell-model">Small 4</div><div class="cell-spec">efficient enterprise</div>
+            <div class="cell-review">The lighter half of the pair — efficient enterprise deployment without leaderboard ambitions.<br><a href="https://www.aipricingmaster.com/blog/Guide-to-Open-Source-AI-Models-in-2026" target="_blank" rel="noopener">aipricingmaster.com &rarr;</a></div>
+          </td>
+          <td>
+            <div class="cell-model">Large 3</div><div class="cell-spec">EU compliance focus</div>
+            <div class="cell-review">Recommended when EU data compliance and a clean Apache license outweigh topping a leaderboard.<br><a href="https://www.aipricingmaster.com/blog/Guide-to-Open-Source-AI-Models-in-2026" target="_blank" rel="noopener">aipricingmaster.com &rarr;</a></div>
+          </td>
+          <td><span class="cell-empty">&mdash;</span></td>
+          <td><span class="cell-empty">&mdash;</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head">
+    <h2>Enterprise &amp; IDE picks</h2>
+  </div>
+  <p class="section-sub">These coding tools let you choose the engine underneath. Here's what's actually on the menu in each, and what reviewers currently point to.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th class="tier-head">Models on offer</th>
+          <th class="tier-head">Recommended pick</th>
+          <th class="tier-head">Why</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-copilot)">
+        <tr>
+          <th class="co-cell"><div class="co-name">GitHub Copilot</div><div class="co-line">IDE + PR assistant</div></th>
+          <td class="ent-models">Claude Sonnet / Opus / Haiku, GPT-5.x, Gemini 3.1 Pro &amp; Flash — picker depends on your plan tier.</td>
+          <td class="ent-pick">Sonnet 5 daily<br>Opus 5 for hard tickets<br>Gemini 3.1 Pro for huge-context reviews</td>
+          <td class="ent-why">Sonnet and GPT-5.4 are rated the best-balanced everyday picks; Opus 5 and GPT-5.5 get reserved for the tickets those two can't close.
+            <a href="https://standardcompute.com/best-ai-model/for/github-copilot" target="_blank" rel="noopener">standardcompute.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-cursor)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Cursor</div><div class="co-line">AI-native editor</div></th>
+          <td class="ent-models">Claude, GPT-5.x, Gemini, Grok, plus Cursor's in-house Composer 2.5 and Fusion.</td>
+          <td class="ent-pick">Sonnet 5 daily<br>Opus 5 or GPT-5.5 for architecture<br>Grok 4.3 for value</td>
+          <td class="ent-why">Sonnet 5 has become the forum-consensus default on Reddit and Discord threads, prized for pairing its 1M-token window with strong agent-mode behavior.
+            <a href="https://lopezproductions.ai/playbook/what-model-should-i-use-for-cursor-ai-in-2026" target="_blank" rel="noopener">lopezproductions.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-devin)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Cognition</div><div class="co-line">Devin, autonomous agent</div></th>
+          <td class="ent-models">Runs on Claude specifically — Opus, Sonnet, and Haiku tiers, swapped in after internal eval runs.</td>
+          <td class="ent-pick">Opus-tier Claude for the autonomous runs</td>
+          <td class="ent-why">Cognition's own case study credits Claude's native agentic behavior for building Devin on it end to end, model-by-model tested before any swap.
+            <a href="https://claude.com/customers/cognition" target="_blank" rel="noopener">claude.com/customers/cognition &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-windsurf)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Windsurf</div><div class="co-line">AI-native editor</div></th>
+          <td class="ent-models">Model-agnostic — Claude, GPT-5.x, and Gemini selectable inside its Cascade agent.</td>
+          <td class="ent-pick">Sonnet 5 daily</td>
+          <td class="ent-why">Reviewed alongside Cursor as one of the two leading AI-first IDEs, with Cascade building a project-wide dependency graph before it edits.
+            <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026" target="_blank" rel="noopener">jobsbyculture.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-claudecode)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Claude Code</div><div class="co-line">Anthropic's CLI agent</div></th>
+          <td class="ent-models">Claude only — Haiku, Sonnet, Opus, selectable per session.</td>
+          <td class="ent-pick">Sonnet 5 daily<br>Opus 5 for hard tickets</td>
+          <td class="ent-why">Named the gold standard for terminal-based agentic coding, cited at a 93% benchmark success rate.
+            <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026" target="_blank" rel="noopener">jobsbyculture.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-cline)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Cline</div><div class="co-line">Open-source VS Code sidebar</div></th>
+          <td class="ent-models">Model-agnostic, bring-your-own API key — any of the above.</td>
+          <td class="ent-pick">Sonnet 5, or DeepSeek V4 Pro on a budget</td>
+          <td class="ent-why">The strongest free option once you're paying for API calls yourself — Apache 2.0, with growing support across JetBrains, Cursor, Windsurf, and Zed.
+            <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026" target="_blank" rel="noopener">jobsbyculture.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-aider)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Aider</div><div class="co-line">Git-aware CLI pair programmer</div></th>
+          <td class="ent-models">Model-agnostic, bring-your-own API key.</td>
+          <td class="ent-pick">Sonnet 5, or DeepSeek V4 Pro on a budget</td>
+          <td class="ent-why">Rated a CLI gold standard alongside Claude Code, especially strong at git-aware multi-file edits.
+            <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026" target="_blank" rel="noopener">jobsbyculture.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-replit)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Replit Agent</div><div class="co-line">Cloud autonomous agent</div></th>
+          <td class="ent-models">Runs on a mix of frontier models behind the scenes; not user-selectable.</td>
+          <td class="ent-pick">Use as-is — no model picker</td>
+          <td class="ent-why">Grouped with Devin as where the category is heading: agents that plan and execute a whole ticket end to end, in the cloud, rather than assist inline.
+            <a href="https://www.mindstudio.ai/blog/best-ai-code-editors" target="_blank" rel="noopener">mindstudio.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-amazonq)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Amazon Q Developer</div><div class="co-line">AWS-native assistant</div></th>
+          <td class="ent-models">AWS-managed model mix, tuned for AWS APIs; not a user-selectable picker.</td>
+          <td class="ent-pick">Use as-is — best inside AWS-heavy repos</td>
+          <td class="ent-why">Strong specifically on AWS-specific APIs and infrastructure code; reviewers say it trails the general-purpose leaders outside that lane.
+            <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026" target="_blank" rel="noopener">jobsbyculture.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head">
+    <h2>Model routers</h2>
+  </div>
+  <p class="section-sub">A different category from the harnesses above — you don't pick the model here, the router does, per request, based on the prompt itself.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Router</th>
+          <th class="tier-head">What it does</th>
+          <th class="tier-head">How it decides</th>
+          <th class="tier-head">Note</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-router)">
+        <tr>
+          <th class="co-cell"><div class="co-name">ChatGPT Auto</div><div class="co-line">Native, built into GPT-5.x/6</div></th>
+          <td class="ent-models">Switches between Instant, Thinking, and Pro tiers inside a single conversation.</td>
+          <td class="ent-pick">Real-time complexity, tool-need, and intent detection</td>
+          <td class="ent-why">OpenAI's own default now — the router escalates a quick question to the slower "thinking" model automatically instead of asking you to choose.
+            <a href="https://openai.com/index/introducing-gpt-5/" target="_blank" rel="noopener">openai.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-router)">
+        <tr>
+          <th class="co-cell"><div class="co-name">OpenRouter</div><div class="co-line">Auto Router</div></th>
+          <td class="ent-models">Sits in front of 300+ models from every lab in this sheet; set the model to <code>auto</code> and it picks per prompt.</td>
+          <td class="ent-pick">Aggregate 7-day usage data per task type, across millions of requests</td>
+          <td class="ent-why">The closest thing to a market-priced router — it's effectively crowd-sourcing "what's working best right now" instead of a fixed benchmark.
+            <a href="https://openrouter.ai/blog/insights/model-routing/" target="_blank" rel="noopener">openrouter.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-router)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Martian</div><div class="co-line">Decision-engine API</div></th>
+          <td class="ent-models">A drop-in layer that takes a prompt meant for one model and reroutes it to whichever backend model suits it best.</td>
+          <td class="ent-pick">Learned routing policy over cost, quality, and latency</td>
+          <td class="ent-why">Built for teams who want router logic in their own product rather than a hosted chat surface.
+            <a href="https://stackshare.io/stackups/martian-model-router-vs-open-ai" target="_blank" rel="noopener">stackshare.io &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-router)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Not Diamond</div><div class="co-line">Model-selection API</div></th>
+          <td class="ent-models">Determines which LLM is best suited to answer a given query before it's sent.</td>
+          <td class="ent-pick">Per-query classifier, tunable to your own eval data</td>
+          <td class="ent-why">Positioned for developers embedding routing logic directly into an app rather than end users picking a model by hand.
+            <a href="https://github.com/Not-Diamond/awesome-ai-model-routing" target="_blank" rel="noopener">github.com/Not-Diamond &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head">
+    <h2>Self-hosted agent frameworks</h2>
+  </div>
+  <p class="section-sub">Closer to Grok than to a router or an IDE plugin — a persistent agent that runs continuously and takes action on its own — except these run on your own machine and aren't locked to one lab's model.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Framework</th>
+          <th class="tier-head">What it is</th>
+          <th class="tier-head">Runs on</th>
+          <th class="tier-head">Note</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-agentfw)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Hermes Agent</div><div class="co-line">Nous Research · Feb 2026</div></th>
+          <td class="ent-models">Self-hosted agent with persistent memory across sessions; codifies repeated successful tasks into reusable, human-readable skill files.</td>
+          <td class="ent-pick">Model-neutral — OpenRouter, OpenAI, Anthropic, or your own private endpoint</td>
+          <td class="ent-why">Claimed the #1 spot on OpenRouter by daily token usage within its first three months of release.
+            <a href="https://hermes-agent.org/" target="_blank" rel="noopener">hermes-agent.org &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-agentfw)">
+        <tr>
+          <th class="co-cell"><div class="co-name">OpenClaw</div><div class="co-line">OpenClaw Foundation · MIT</div></th>
+          <td class="ent-models">Self-hosted personal agent that executes real actions — shell commands, file management, web automation — via 100+ prebuilt AgentSkills, not just chat replies.</td>
+          <td class="ent-pick">Model-agnostic — connects to Claude, GPT, and others</td>
+          <td class="ent-why">Went from a November 2025 side project to 355K GitHub stars by April 2026; now stewarded by an independent non-profit foundation.
+            <a href="https://openclaw.ai/" target="_blank" rel="noopener">openclaw.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head">
+    <h2>Consumer &amp; embedded assistants</h2>
+  </div>
+  <p class="section-sub">Your "Grok bot" category — assistants that live where people already are, not inside an IDE or an API call.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Assistant</th>
+          <th class="tier-head">Where it lives</th>
+          <th class="tier-head">Best for</th>
+          <th class="tier-head">Note</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-consumer)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Grok</div><div class="co-line">xAI</div></th>
+          <td class="ent-models">X app, grok.com, standalone mobile app.</td>
+          <td class="ent-pick">Real-time / social context</td>
+          <td class="ent-why">Plugged directly into the X firehose, so it knows what's happening before it hits the news; Aurora Voice adds near real-time spoken conversation.
+            <a href="https://sintra.ai/blog/grok-vs-chatgpt-vs-gemini" target="_blank" rel="noopener">sintra.ai &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-consumer)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Gemini</div><div class="co-line">Google</div></th>
+          <td class="ent-models">Gmail, Docs, Sheets, Slides, Calendar, Android, Search.</td>
+          <td class="ent-pick">Google-ecosystem productivity</td>
+          <td class="ent-why">Reviewers still hand Gemini 3.1 Pro the top reasoning scores against Grok and GPT-5.6 in several independent benchmark rounds.
+            <a href="https://tech-insider.org/best-ai-chatbots-2026/" target="_blank" rel="noopener">tech-insider.org &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-consumer)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Microsoft Copilot</div><div class="co-line">Microsoft</div></th>
+          <td class="ent-models">Word, Excel, Teams, Outlook, Windows.</td>
+          <td class="ent-pick">Editing/analyzing inside Microsoft 365</td>
+          <td class="ent-why">Built to help create, edit, and analyze content without leaving the app you're already working in — not a separate destination.
+            <a href="https://www.techrepublic.com/article/news-ai-chatbot-cheat-sheet-overview/" target="_blank" rel="noopener">techrepublic.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-consumer)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Meta AI</div><div class="co-line">Meta</div></th>
+          <td class="ent-models">WhatsApp, Instagram, Messenger.</td>
+          <td class="ent-pick">Quick answers inside chat apps you're already in</td>
+          <td class="ent-why">The default choice when the job is "answer this without opening another app" rather than deep work.
+            <a href="https://tech-insider.org/ie/meta-ai-vs-gemini-vs-grok-2026/" target="_blank" rel="noopener">tech-insider.org &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Snapshot compiled September 2026 from public benchmarks, vendor pricing pages, and the reviews linked inline above. This market re-shuffles every few weeks — treat tier names, prices, and picker rosters as directional, and confirm against the vendor's current docs before committing budget or an integration to a specific model.</p>
+    <div class="sources">
+      <a href="https://www.secondtalent.com/resources/every-claude-ai-model-explained-compared/">secondtalent.com/claude</a>
+      <a href="https://theaicareerlab.com/blog/which-claude-model-should-you-use">theaicareerlab.com</a>
+      <a href="https://help.openai.com/en/articles/9624314-model-release-notes">help.openai.com/release-notes</a>
+      <a href="https://www.secondtalent.com/resources/every-openai-model-explained-compared/">secondtalent.com/openai</a>
+      <a href="https://platform.teamai.com/blog/large-language-models-llms/gemini-models-explained-the-complete-2026-guide/">teamai.com/gemini</a>
+      <a href="https://www.ai-toolbox.co/grok-models/grok-models-explained-2026">ai-toolbox.co/grok</a>
+      <a href="https://techiehub.blog/best-ai-models-compared/">techiehub.blog</a>
+      <a href="https://codersera.com/blog/best-open-source-llm-2026-llama-4-qwen-3-5-deepseek-v4-gemma-4-mistral/">codersera.com/open-source</a>
+      <a href="https://tech-insider.org/llama-4-maverick-vs-mistral-large-3-vs-deepseek-v4-pro-2026/">tech-insider.org</a>
+      <a href="https://standardcompute.com/best-ai-model/for/github-copilot">standardcompute.com/copilot</a>
+      <a href="https://lopezproductions.ai/playbook/what-model-should-i-use-for-cursor-ai-in-2026">lopezproductions.ai/cursor</a>
+      <a href="https://claude.com/customers/cognition">claude.com/customers/cognition</a>
+      <a href="https://techcrunch.com/2026/09/03/openai-launches-astra-its-powerful-and-controversial-new-model/">techcrunch.com/gpt-6-astra</a>
+      <a href="https://jobsbyculture.com/blog/ai-coding-agents-compared-2026">jobsbyculture.com/agents</a>
+      <a href="https://www.mindstudio.ai/blog/best-ai-code-editors">mindstudio.ai/editors</a>
+      <a href="https://openrouter.ai/blog/insights/model-routing/">openrouter.ai/routing</a>
+      <a href="https://stackshare.io/stackups/martian-model-router-vs-open-ai">stackshare.io/martian</a>
+      <a href="https://github.com/Not-Diamond/awesome-ai-model-routing">github.com/Not-Diamond</a>
+      <a href="https://sintra.ai/blog/grok-vs-chatgpt-vs-gemini">sintra.ai/grok</a>
+      <a href="https://tech-insider.org/best-ai-chatbots-2026/">tech-insider.org/chatbots</a>
+      <a href="https://www.techrepublic.com/article/news-ai-chatbot-cheat-sheet-overview/">techrepublic.com</a>
+      <a href="https://hermes-agent.org/">hermes-agent.org</a>
+      <a href="https://openclaw.ai/">openclaw.ai</a>
+    </div>
+  </footer>
+
+</div>
