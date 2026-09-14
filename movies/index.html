@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorite Indian Movies</title>
+  <meta name="description" content="Vivek Bakshi's favorite Indian films, organized into Classics, Comedies, History, Drama, and Musical Romance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ============ Base & tokens ============ */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f8;
+  --color-text: #1a1a1e;
+  --color-muted: #6b6b76;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-border: #e5e5ea;
+  --max-width: 960px;
+  --radius: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ============ Header / nav ============ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--color-muted);
+  font-size: 0.925rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-text);
+}
+
+/* ============ Hero ============ */
+.hero {
+  padding: 7rem 1.5rem 6rem;
+  text-align: center;
+}
+
+.hero-kicker {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.hero-role {
+  margin-top: 0.75rem;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.hero-meta {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* ============ Buttons ============ */
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background: var(--color-border);
+}
+
+/* ============ Sections (shared) ============ */
+.section {
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+}
+
+/* ============ About ============ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+}
+
+.about-lead {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.about-body p + p {
+  margin-top: 1rem;
+}
+
+.about-body {
+  color: var(--color-muted);
+}
+
+@media (max-width: 700px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ============ Book of Life ============ */
+.book-intro {
+  color: var(--color-muted);
+  max-width: 640px;
+  margin-bottom: 1.75rem;
+}
+
+/* ============ Experience timeline ============ */
+.timeline {
+  list-style: none;
+  border-left: 2px solid var(--color-border);
+  padding-left: 2rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-2rem - 7px);
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid var(--color-bg);
+}
+
+.timeline-period {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.timeline-role {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.timeline-desc {
+  color: var(--color-muted);
+  margin-top: 0.35rem;
+}
+
+/* ============ Skills ============ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.skill-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.skill-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+/* ============ Projects ============ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.project-link {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ============ Education & certifications ============ */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.edu-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.edu-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.edu-degree {
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.edu-card p:last-child {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.cert-line {
+  margin-top: 1.75rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* ============ Blog ============ */
+.blog-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.blog-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.blog-date {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.blog-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.blog-card h3 a {
+  color: var(--color-text);
+}
+
+.blog-card h3 a:hover {
+  color: var(--color-accent);
+}
+
+.blog-card p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.blog-more {
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+/* ============ Tweets page ============ */
+.tweet-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.tweet-stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1rem;
+}
+
+.tweet-stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tweet-stat-label {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tweet-card .tweet-text {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+/* ============ Page header (subpages like blog.html) ============ */
+.page-header {
+  padding: 4rem 0 1rem;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page-header p {
+  color: var(--color-muted);
+  margin-top: 0.5rem;
+}
+
+/* ============ Footer ============ */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.footer-sep {
+  margin: 0 0.6rem;
+  color: var(--color-border);
+}
+
+
+/* ============ Favorite Indian Movies ============ */
+
+.category-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.category-heading:first-child {
+  margin-top: 0;
+}
+
+.category-count {
+  font-weight: 500;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.subsection-heading {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 2.25rem 0 1.1rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--color-border);
+}
+
+/* ---- History timeline (era-grouped) ---- */
+.history-timeline {
+  margin-top: 0.5rem;
+}
+
+.era-block {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  column-gap: 1.5rem;
+  margin-bottom: 2.75rem;
+}
+
+.era-block:last-child {
+  margin-bottom: 0;
+}
+
+.era-marker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.era-marker::before {
+  content: "";
+  position: absolute;
+  top: 0.1rem;
+  bottom: -2.75rem;
+  left: 50%;
+  width: 2px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.era-block:last-child .era-marker::before {
+  display: none;
+}
+
+.era-dot {
+  width: 14px;
+  height: 14px;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-bg);
+  position: relative;
+  z-index: 1;
+}
+
+.era-heading {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.1rem;
+}
+
+@media (max-width: 560px) {
+  .era-block {
+    grid-template-columns: 18px 1fr;
+    column-gap: 1rem;
+  }
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.movie-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.movie-poster {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+
+.poster-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.poster-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-surface);
+}
+
+.movie-info {
+  padding: 1rem 1.1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.movie-year {
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.movie-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.55rem 0 0.7rem;
+}
+
+.genre-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  color: var(--tag-color, var(--color-accent));
+  background: color-mix(in srgb, var(--tag-color, var(--color-accent)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tag-color, var(--color-accent)) 30%, transparent);
+}
+
+.movie-blurb {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.movie-dialogues {
+  margin-top: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-left: 3px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0 6px 6px 0;
+}
+
+.dialogues-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-muted);
+  margin-bottom: 0.35rem;
+}
+
+.movie-dialogues ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.movie-dialogues li {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.movie-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+
+.movie-link {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.poster-attrib {
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.poster-attrib a {
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.poster-note {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+  </style>
+</head>
+<body>
+<main>
+    <div class="page-header container">
+      <h1>Favorite Indian Movies</h1>
+      <p>41 films I keep coming back to, organized into Classics, Comedies, History, Drama, and Musical Romance.</p>
+      <p class="poster-note">Posters are used under fair use for identification and commentary purposes, sourced via each film's Wikipedia article.</p>
+    </div>
+
+    <section class="section" style="border-top:none;">
+      <div class="container">
+        
+        <h2 class="category-heading">Classics <span class="category-count">(5)</span></h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/06-sholay.jpg" alt="Sholay (1975) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Sholay <span class="movie-year">(1975)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#64748b">Adventure</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Two small-time crooks, a fearsome dacoit, and one of Hindi cinema’s most quoted screenplays — Sholay basically wrote the rulebook for the Bollywood action-drama.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“Kitne aadmi the? (How many men were there?)”</li><li>“Arre o Sambha, kitna inaam rakhe hai sarkar hum par?”</li><li>“Yeh haath humko de de, Thakur!”</li><li>“Jo darr gaya, samjho marr gaya.”</li><li>“Tera kya hoga, Kaalia?”</li><li>“Basanti, in kutto ke samne mat nachna.”</li><li>“Chal Dhanno, aaj teri Basanti ki izzat ka sawaal hai!”</li><li>“Holi kab hai? Kab hai Holi, kab?”</li><li>“Itna sannata kyun hai bhai?”</li><li>“Bahut yaraana lagta hai.”</li><li>“Soowar ke bachcho!”</li><li>“Thakur na jhuk sakta hai na toot sakta hai, Thakur sirf marr sakta hai.”</li><li>“Yeh haath nahi, phansi ka phanda hai.”</li><li>“Sardar, maine aapka namak khaya hai.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Sholay" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Sholay" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/24-dhurandhar.jpg" alt="Dhurandhar (2025) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Dhurandhar <span class="movie-year">(2025)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#4c1d95">Thriller</span><span class="genre-tag" style="--tag-color:#64748b">Spy</span></div>
+              <p class="movie-blurb">Ranveer Singh goes undercover inside Karachi’s criminal underworld in Aditya Dhar’s sprawling spy thriller — one of 2025’s biggest Hindi box-office hits, with a sequel already out.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Ye naya India hai. (This is the new India.)”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Dhurandhar" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Dhurandhar" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/07-mr-india.jpg" alt="Mr. India (1987) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Mr. India <span class="movie-year">(1987)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#64748b">Sci-Fi</span></div>
+              <p class="movie-blurb">An orphanage caretaker turns invisible to fight Mogambo, one of Hindi cinema’s most deliciously over-the-top villains, in this beloved superhero-adjacent adventure.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Mogambo khush hua! (Mogambo is pleased!)”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Mr._India_(1987_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Mr._India_(1987_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/16-lagaan.jpg" alt="Lagaan (2001) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Lagaan <span class="movie-year">(2001)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#0891b2">Musical</span></div>
+              <p class="movie-blurb">A drought-stricken village wagers its future on a cricket match against its British colonizers — nearly four hours long and an Oscar nominee for Best Foreign Film.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Lagaan" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Lagaan" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/05-anand.jpg" alt="Anand (1971) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Anand <span class="movie-year">(1971)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Rajesh Khanna’s terminally ill Anand chooses to live joyfully rather than mourn his own fate, in Hrishikesh Mukherjee’s gentle classic that still gets quoted decades later.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“Zindagi badi honi chahiye, lambi nahi. (Life should be big, not long.)”</li><li>“Babu moshai, zindagi aur maut upar wale ke haath hai.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Anand_(1971_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Anand_(1971_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+
+        <h2 class="category-heading">Comedies <span class="category-count">(9)</span></h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/11-andaz-apna-apna.jpg" alt="Andaz Apna Apna (1994) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Andaz Apna Apna <span class="movie-year">(1994)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span></div>
+              <p class="movie-blurb">A gloriously silly cult comedy about two broke suitors chasing the same heiress — quoted line-for-line by fans who somehow love it more with every rewatch.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“Galti se mistake ho gaya!”</li><li>“Crime Master Gogo naam hai mera, aankhen nikal ke gotiyan khelta hoon main.”</li><li>“Suno suno duniya ke logon, sabse bada hai mister Gogo.”</li><li>“Teja main hoon, mark idhar hai.”</li><li>“Do dost ek hi pyale mein chai peeyenge, isse dosti badhti hai.”</li><li>“Main toh kehta hoon aap purush hi nahi hain, mahapurush hain mahapurush.”</li><li>“Aaya hoon, kuch toh leke jaunga, khaandani chor hoon main.”</li><li>“Chit tu haara... pat main jeeta.”</li><li>“Jab jab tu khush hua hai, tab tab main barbaad hua hoon.”</li><li>“Jo jeeta, wohi Sikandar, aur jo haara, woh hai bandar.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Andaz_Apna_Apna" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Andaz_Apna_Apna" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/08-munna-bhai-m-b-b-s.jpg" alt="Munna Bhai M.B.B.S. (2003) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Munna Bhai M.B.B.S. <span class="movie-year">(2003)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">A tender-hearted gangster fakes his way into medical school and ends up teaching the profession a thing or two about bedside manner. Sanjay Dutt at his most likable.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Jaadu ki jhappi! (A magic hug!)”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Munna_Bhai_M.B.B.S." target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Munna_Bhai_M.B.B.S." target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/09-lage-raho-munna-bhai.jpg" alt="Lage Raho Munna Bhai (2006) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Lage Raho Munna Bhai <span class="movie-year">(2006)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">The sequel that turned Gandhian philosophy into a pop-culture phenomenon, coining “Gandhigiri” for a generation that had mostly filed Gandhi under textbook history.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Gandhigiri”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Lage_Raho_Munna_Bhai" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Lage_Raho_Munna_Bhai" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/20-3-idiots.jpg" alt="3 Idiots (2009) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">3 Idiots <span class="movie-year">(2009)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Aamir Khan’s engineering-college rebel argues that curiosity beats rote memorization, in a comedy that became required viewing for a generation of Indian students.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“All izz well.”</li><li>“Kabil bano, kaamyabi jhak maar ke tumhare peeche aayegi.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/3_Idiots" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/3_Idiots" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/29-khosla-ka-ghosla.jpg" alt="Khosla Ka Ghosla (2006) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Khosla Ka Ghosla <span class="movie-year">(2006)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#9f1239">Crime</span></div>
+              <p class="movie-blurb">A middle-class Delhi family cons a land-grabbing builder into returning their stolen plot in Dibakar Banerjee's directorial debut - sharp, low-budget, and one of the most quietly beloved comedies of its decade.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Khosla_Ka_Ghosla" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Khosla_Ka_Ghosla" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/15-hera-pheri.jpg" alt="Hera Pheri (2000) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Hera Pheri <span class="movie-year">(2000)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#9f1239">Crime</span></div>
+              <p class="movie-blurb">Three broke roommates stumble into a kidnapping scheme, and out of it come some of Bollywood comedy’s most endlessly memed lines, courtesy of Paresh Rawal’s Baburao.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Utha le re baba, utha le, isko yahan se!”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Hera_Pheri_(2000_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Hera_Pheri_(2000_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/30-gol-maal.jpg" alt="Gol Maal (1979) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Gol Maal <span class="movie-year">(1979)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#be185d">Romance</span></div>
+              <p class="movie-blurb">Amol Palekar spins an escalating web of lies to keep a job under his orthodox, mustache-obsessed boss, in Hrishikesh Mukherjee's original - the 1979 classic behind the name, decades before the 2006 franchise borrowed it.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Gol_Maal" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Gol_Maal" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/40-pushpaka-vimana.jpg" alt="Pushpaka Vimana (1987) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Pushpaka Vimana <span class="movie-year">(1987)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Kamal Haasan plays an unemployed graduate who swaps lives with an unconscious rich drunk - told entirely without a line of dialogue, Singeetam Srinivasa Rao's tribute to Chaplin and Keaton still holds up as pure visual comedy.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Pushpaka_Vimana_(1987_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Pushpaka_Vimana_(1987_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/14-jaane-bhi-do-yaaro.jpg" alt="Jaane Bhi Do Yaaro (1983) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Jaane Bhi Do Yaaro <span class="movie-year">(1983)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#64748b">Satire</span></div>
+              <p class="movie-blurb">A pitch-black satire on corruption that spirals into one of Hindi cinema’s most chaotic climaxes — a cult favorite that only gets sharper with age.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Jaane_Bhi_Do_Yaaro" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Jaane_Bhi_Do_Yaaro" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+
+        <h2 class="category-heading">History <span class="category-count">(10)</span></h2>
+        <div class="history-timeline">
+          <div class="era-block">
+            <div class="era-marker"><span class="era-dot"></span></div>
+            <div class="era-content">
+              <h3 class="era-heading">Ancient India</h3>
+              <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/17-bharat-ek-khoj.jpg" alt="Bharat Ek Khoj (1988) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Bharat Ek Khoj <span class="movie-year">(1988)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#64748b">TV Series</span></div>
+              <p class="movie-blurb">Shyam Benegal’s 53-episode adaptation of Nehru’s “The Discovery of India” dramatizes five thousand years of subcontinental history — Doordarshan appointment viewing at its most ambitious.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Bharat_Ek_Khoj" target="_blank" rel="noopener">More on Wikipedia →</a>
+                <a class="movie-link movie-link-watch" href="https://www.youtube.com/watch?v=xv6hYG_mIfU&list=PLqtVCj5iilH4w0Y8KBB4fqBu25T0sGhXG" target="_blank" rel="noopener">Watch on YouTube →</a>
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Bharat_Ek_Khoj" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+            </div>
+          </div>
+          <div class="era-block">
+            <div class="era-marker"><span class="era-dot"></span></div>
+            <div class="era-content">
+              <h3 class="era-heading">Freedom Struggle</h3>
+              <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/01-gandhi.png" alt="Gandhi (1982) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Gandhi <span class="movie-year">(1982)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Richard Attenborough’s sweeping epic follows Mohandas Gandhi from a young lawyer thrown off a train in South Africa to the father of a nation’s independence. Ben Kingsley’s performance carried eight Oscars, including Best Picture.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“An eye for an eye only ends up making the whole world blind.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Gandhi_(film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Gandhi_(film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/02-sardar.jpg" alt="Sardar (1993) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Sardar <span class="movie-year">(1993)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Paresh Rawal delivers a career-defining turn as Sardar Vallabhbhai Patel, focusing on the final years he spent unifying over 500 princely states into a single India.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Sardar_(1993_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                <a class="movie-link movie-link-watch" href="https://www.youtube.com/watch?v=BWkXVnZKz3c" target="_blank" rel="noopener">Watch on YouTube →</a>
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Sardar_(1993_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/03-the-legend-of-bhagat-singh.jpg" alt="The Legend of Bhagat Singh (2002) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">The Legend of Bhagat Singh <span class="movie-year">(2002)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Ajay Devgn’s intense portrayal of the young revolutionary traces Bhagat Singh’s path from witnessing the Jallianwala Bagh massacre to his execution at 23, scored by A. R. Rahman.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Inquilab Zindabad!”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/The_Legend_of_Bhagat_Singh" target="_blank" rel="noopener">More on Wikipedia →</a>
+                <a class="movie-link movie-link-watch" href="https://www.youtube.com/watch?v=SW-QaXiM6SU" target="_blank" rel="noopener">Watch on YouTube →</a>
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/The_Legend_of_Bhagat_Singh" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+            </div>
+          </div>
+          <div class="era-block">
+            <div class="era-marker"><span class="era-dot"></span></div>
+            <div class="era-content">
+              <h3 class="era-heading">Post-Independence</h3>
+              <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/18-sam-bahadur.jpg" alt="Sam Bahadur (2023) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Sam Bahadur <span class="movie-year">(2023)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#334155">War</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Vicky Kaushal channels Field Marshal Sam Manekshaw’s wit and resolve through the 1971 war that created Bangladesh, directed by Meghna Gulzar.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“"If a man says he is not afraid of dying, he is either lying or he is a Gorkha." — Sam Manekshaw’s own words, dramatized in the film.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Sam_Bahadur_(film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Sam_Bahadur_(film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/04-pradhanmantri.jpg" alt="Pradhanmantri (2013) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Pradhanmantri <span class="movie-year">(2013)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#57534e">Documentary</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span><span class="genre-tag" style="--tag-color:#64748b">TV Series</span></div>
+              <p class="movie-blurb">Shekhar Kapur hosts this ABP News documentary series chronicling India’s prime ministers from Nehru onward — a weekly civics lesson dressed as television.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Pradhanmantri_(TV_series)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                <a class="movie-link movie-link-watch" href="https://www.youtube.com/watch?v=G13LJ-rrvfA&list=PLrw_veBfks8vB1CX2LRpOFjRn0fw6lzgH" target="_blank" rel="noopener">Watch on YouTube →</a>
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Pradhanmantri_(TV_series)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+            </div>
+          </div>
+          <div class="era-block">
+            <div class="era-marker"><span class="era-dot"></span></div>
+            <div class="era-content">
+              <h3 class="era-heading">Modern India</h3>
+              <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/25-article-370.jpeg" alt="Article 370 (2024) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Article 370 <span class="movie-year">(2024)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#6d28d9">Political</span><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Yami Gautam plays an NIA officer working behind the scenes on the ground in Kashmir as the government moves to revoke Article 370 - a tense, procedural take on one of modern India's most consequential political decisions.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Article_370_(film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Article_370_(film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/19-shershaah.jpg" alt="Shershaah (2021) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Shershaah <span class="movie-year">(2021)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#334155">War</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Sidharth Malhotra plays Kargil War hero Captain Vikram Batra in this tribute to the soldier awarded India’s highest wartime gallantry honor, posthumously.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Yeh Dil Maange More! (This heart wants more!)”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Shershaah" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Shershaah" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/28-uri-the-surgical-strike.jpg" alt="Uri: The Surgical Strike (2019) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Uri: The Surgical Strike <span class="movie-year">(2019)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#334155">War</span><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Vicky Kaushal leads a dramatized account of the 2016 surgical strikes across the Line of Control, shot with tightly choreographed single-take combat sequences - the film that put "How's the josh?" into everyday conversation.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Uri:_The_Surgical_Strike" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Uri:_The_Surgical_Strike" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/39-black-friday.jpg" alt="Black Friday (2004) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Black Friday <span class="movie-year">(2004)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#9f1239">Crime</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span></div>
+              <p class="movie-blurb">Anurag Kashyap reconstructs the 1993 Bombay bombings and the manhunt that followed, adapted from Hussain Zaidi's book — shelved by the censor board for two years before its eventual release.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Black_Friday_(2004_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Black_Friday_(2004_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+            </div>
+          </div></div>
+
+        <h2 class="category-heading">Drama <span class="category-count">(14)</span></h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/23-dil-chahta-hai.jpg" alt="Dil Chahta Hai (2001) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Dil Chahta Hai <span class="movie-year">(2001)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Three childhood friends drift into adulthood and their first real heartbreaks, in the film that basically invented the modern Bollywood friendship movie.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Dil_Chahta_Hai" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Dil_Chahta_Hai" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/22-rang-de-basanti.jpg" alt="Rang De Basanti (2006) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Rang De Basanti <span class="movie-year">(2006)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#6d28d9">Political</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">A group of aimless college friends restage a freedom-fighter play and find themselves radicalized against present-day corruption — one of the sharpest youth-political dramas Bollywood has made.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Koi bhi desh perfect nahi hota, use perfect banana padta hai.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Rang_De_Basanti" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Rang_De_Basanti" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/12-bombay.jpg" alt="Bombay (1995) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Bombay <span class="movie-year">(1995)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#be185d">Romance</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Mani Ratnam sets an inter-religious love story against the real 1992–93 Bombay riots, with an A. R. Rahman score that has outlived the film’s original controversy.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Bombay_(film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Bombay_(film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/34-a-wednesday.jpg" alt="A Wednesday! (2008) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">A Wednesday! <span class="movie-year">(2008)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#4c1d95">Thriller</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">An anonymous caller threatens to detonate bombs across Mumbai unless four jailed terrorists are freed, and a police commissioner has one day to outthink him — Neeraj Pandey’s tense two-hander debut.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/A_Wednesday!" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/A_Wednesday!" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/35-special-26.jpg" alt="Special 26 (2013) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Special 26 <span class="movie-year">(2013)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#9f1239">Crime</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#7c2d12">Historical</span></div>
+              <p class="movie-blurb">A gang of con men pose as CBI officers to rob corrupt businessmen in broad daylight, loosely inspired by a real 1980s heist — Akshay Kumar and Manoj Bajpayee playing a very confident long game.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Special_26" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Special_26" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/36-andhadhun.jpg" alt="Andhadhun (2018) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Andhadhun <span class="movie-year">(2018)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#9f1239">Crime</span><span class="genre-tag" style="--tag-color:#4c1d95">Thriller</span><span class="genre-tag" style="--tag-color:#ca8a04">Comedy</span></div>
+              <p class="movie-blurb">A blind pianist stumbles into a murder scene and has to decide how much of what he heard to admit to — Sriram Raghavan's pitch-black thriller that keeps twisting long after you think it's done.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Andhadhun" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Andhadhun" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/37-taare-zameen-par.png" alt="Taare Zameen Par (2007) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Taare Zameen Par <span class="movie-year">(2007)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#0369a1">Drama</span><span class="genre-tag" style="--tag-color:#65a30d">Family</span></div>
+              <p class="movie-blurb">An eight-year-old struggling with undiagnosed dyslexia finds the one teacher willing to see past his grades, in Aamir Khan's directorial debut — a film that changed how Indian classrooms talked about learning differences.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Taare_Zameen_Par" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Taare_Zameen_Par" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/38-udaan.jpg" alt="Udaan (2010) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Udaan <span class="movie-year">(2010)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Expelled from boarding school, a teenager returns home to a father who runs the house like a factory floor — Vikramaditya Motwane's debut, selected for Cannes' Un Certain Regard.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Udaan_(2010_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Udaan_(2010_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/27-tezaab.jpg" alt="Tezaab (1988) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Tezaab <span class="movie-year">(1988)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#b91c1c">Action</span><span class="genre-tag" style="--tag-color:#be185d">Romance</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Anil Kapoor and a star-making Madhuri Dixit anchor N. Chandra's gritty revenge drama, the year's biggest hit and the film that introduced the world to 'Ek Do Teen.'</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Tezaab" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Tezaab" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+        <h3 class="subsection-heading">Based on True Stories <span class="category-count">(5)</span></h3>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/10-chak-de-india.jpg" alt="Chak De! India (2007) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Chak De! India <span class="movie-year">(2007)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Shah Rukh Khan sheds the romantic-hero image to coach a fractured women’s hockey team to redemption — and delivers one of Bollywood’s great sports-movie speeches.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“Sattar minute hai tumhare paas... sattar minute!”</li><li>“Mujhe states ke naam na sunai dete hai na dikhai dete hai... sirf ek mulk ka naam sunai deta hai: I-N-D-I-A!”</li><li>“Maine kaha tha na, team banane ke liye taakat nahi... niyat chahiye.”</li><li>“Vaar karna hai toh samne waale ke goal par nahi... samne waale ke dimag par karo... goal khud-ba-khud ho jayega.”</li><li>“Jo nahin ho sakta... wahi toh karna hai!”</li><li>“Apne hi desh mein mehmaan bankar koi khush kaise ho sakta hai...”</li><li>“Har team mein sirf ek hi gunda ho sakta hai... aur is team ka gunda main hoon.”</li><li>“Marr ke aayenge... lekin haar ke nahi aayenge.”</li><li>“Pehli baar kisi gore ko India ka tiranga leharate hue dekh raha hoon...”</li><li>“Chaandi ko sone mein badalne ki koshish kar raha hoon...”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Chak_De!_India" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Chak_De!_India" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/13-dangal.jpg" alt="Dangal (2016) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Dangal <span class="movie-year">(2016)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Aamir Khan trains his daughters to become world-class wrestlers in a small-town Haryana that never expected girls to wrestle at all — based on the real Phogat family.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogue</p>
+                <ul><li>“Mhari chhoriyaan chhoron se kam hain ke? (Are my daughters any less than sons?)”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Dangal_(2016_film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Dangal_(2016_film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/31-bhaag-milkha-bhaag.jpg" alt="Bhaag Milkha Bhaag (2013) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Bhaag Milkha Bhaag <span class="movie-year">(2013)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Farhan Akhtar becomes sprinter Milkha Singh, tracing his path from a child fleeing Partition violence to the man they called The Flying Sikh — a career-best performance in Rakeysh Omprakash Mehra's biopic.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Bhaag_Milkha_Bhaag" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Bhaag_Milkha_Bhaag" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/32-83.jpg" alt="83 (2021) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">83 <span class="movie-year">(2021)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Ranveer Singh leads a stacked ensemble as Kapil Dev's underdog squad chases India's first Cricket World Cup win in 1983 — a tournament nobody outside the dressing room expected them to survive.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/83_(film)" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/83_(film)" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/33-maidaan.jpg" alt="Maidaan (2024) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Maidaan <span class="movie-year">(2024)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#15803d">Sports</span><span class="genre-tag" style="--tag-color:#b45309">Biographical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Ajay Devgn plays Syed Abdul Rahim, the coach whose methods carried Indian football to Asian Games gold and an Olympic semifinal in the 1950s — a golden era the sport never quite recaptured.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Maidaan" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Maidaan" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+
+        <h2 class="category-heading">Musical Romance <span class="category-count">(3)</span></h2>
+        <div class="movies-grid">
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/41-qayamat-se-qayamat-tak.jpg" alt="Qayamat Se Qayamat Tak (1988) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Qayamat Se Qayamat Tak <span class="movie-year">(1988)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#be185d">Romance</span><span class="genre-tag" style="--tag-color:#0891b2">Musical</span><span class="genre-tag" style="--tag-color:#0369a1">Drama</span></div>
+              <p class="movie-blurb">Aamir Khan and Juhi Chawla's feuding-families elopement turned a generation of Bollywood back toward tragic romance - a modern Heer-Ranjah that launched two superstars and reset the template for the musical romances that followed.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Qayamat_Se_Qayamat_Tak" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Qayamat_Se_Qayamat_Tak" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/21-dilwale-dulhania-le-jayenge.jpg" alt="Dilwale Dulhania Le Jayenge (1995) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Dilwale Dulhania Le Jayenge <span class="movie-year">(1995)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#be185d">Romance</span></div>
+              <p class="movie-blurb">Shah Rukh Khan and Kajol’s cross-country romance ran continuously in a single Mumbai theater for over two decades — the defining NRI love story of the 90s.</p>
+              
+              <div class="movie-dialogues">
+                <p class="dialogues-label">Famous dialogues</p>
+                <ul><li>“Bade bade deshon mein aisi choti choti baatein hoti rehti hain, Senorita.”</li><li>“Jaa Simran jaa, jee le apni zindagi.”</li></ul>
+              </div>
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Dilwale_Dulhania_Le_Jayenge" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Dilwale_Dulhania_Le_Jayenge" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article>
+          <article class="movie-card">
+            <div class="movie-poster"><img class="poster-img" src="images/posters/26-hum-aapke-hain-koun.jpg" alt="Hum Aapke Hain Koun..! (1994) poster" loading="lazy"></div>
+            <div class="movie-info">
+              <h3 class="movie-title">Hum Aapke Hain Koun..! <span class="movie-year">(1994)</span></h3>
+              <div class="movie-genres"><span class="genre-tag" style="--tag-color:#be185d">Romance</span><span class="genre-tag" style="--tag-color:#0891b2">Musical</span><span class="genre-tag" style="--tag-color:#65a30d">Family</span></div>
+              <p class="movie-blurb">Salman Khan and Madhuri Dixit fall for each other at a family wedding in Sooraj Barjatya's ode to Indian wedding rituals - fourteen songs deep and still shaping how Bollywood weddings look and feel decades later.</p>
+              
+              <div class="movie-links">
+                <a class="movie-link" href="https://en.wikipedia.org/wiki/Hum_Aapke_Hain_Koun..!" target="_blank" rel="noopener">More on Wikipedia →</a>
+                
+              </div>
+              <p class="poster-attrib">Poster © respective studio/distributor — used under fair use for identification, via <a href="https://en.wikipedia.org/wiki/Hum_Aapke_Hain_Koun..!" target="_blank" rel="noopener">Wikipedia</a>.</p>
+            </div>
+          </article></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

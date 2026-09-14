@@ -1,2 +1,5 @@
 /history-of-india/*
   X-Robots-Tag: noindex, nofollow
+
+/movies/*
+  X-Robots-Tag: noindex, nofollow
