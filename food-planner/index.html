@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Food Reference &amp; Day Planner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --plane:#f3f4f7; --surface:#ffffff; --surface-2:#eef0f4; --raise:#ffffff;
+  --ink:#161a20; --ink-2:#535a64; --muted:#888e98;
+  --line:#e4e6ec; --line-2:#d2d5dd;
+  --accent:#2563c9; --accent-2:#1a4794; --accent-wash:#e8eefb;
+  --good:#0ca30c; --warning:#e0920a; --serious:#d9713f; --critical:#d03b3b;
+  --shadow:0 1px 2px rgba(22,26,32,.05),0 6px 20px -10px rgba(22,26,32,.18);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plane:#0c0e11; --surface:#171a1e; --surface-2:#1e2228; --raise:#22262c;
+  --ink:#eef1f4; --ink-2:#a5acb6; --muted:#7d838d;
+  --line:#2a2e34; --line-2:#363b43;
+  --accent:#5b9bf0; --accent-2:#8fbcf6; --accent-wash:#15233a;
+  --good:#22b422; --warning:#f2b23a; --serious:#e88a5f; --critical:#e35b5b;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --plane:#0c0e11; --surface:#171a1e; --surface-2:#1e2228; --raise:#22262c;
+  --ink:#eef1f4; --ink-2:#a5acb6; --muted:#7d838d;
+  --line:#2a2e34; --line-2:#363b43;
+  --accent:#5b9bf0; --accent-2:#8fbcf6; --accent-wash:#15233a;
+  --good:#22b422; --warning:#f2b23a; --serious:#e88a5f; --critical:#e35b5b;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{color-scheme:light dark}
+body{margin:0;background:var(--plane);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 70px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+header.mast{padding:32px 0 20px;border-bottom:1px solid var(--line);margin-bottom:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.mast-left{display:flex;gap:16px;align-items:flex-start}
+.rail{width:4px;height:52px;border-radius:3px;background:linear-gradient(var(--accent),var(--accent-2))}
+.mast h1{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:30px;line-height:1.05;margin:6px 0 6px;letter-spacing:-.01em;text-wrap:balance}
+.mast .sub{color:var(--ink-2);font-size:14px;max-width:56ch}
+.toggle{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.05em;padding:8px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px}
+.toggle:hover{border-color:var(--accent);color:var(--accent)}
+section{margin:34px 0 0}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.sec-head h2{font-family:"IBM Plex Serif",serif;font-weight:600;font-size:21px;margin:0;letter-spacing:-.01em}
+.sec-head .count{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.sec-desc{color:var(--ink-2);font-size:13.5px;margin:12px 0 18px;max-width:72ch}
+.cmp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+table.cmp{width:100%;min-width:640px;border-collapse:collapse;font-size:12.4px;background:var(--surface)}
+table.cmp th,table.cmp td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
+table.cmp thead th{background:var(--surface-2);font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600;position:sticky;top:0}
+table.cmp tbody tr:last-child td{border-bottom:0}
+table.cmp td b{color:var(--ink)}
+table.cmp tr.you{background:var(--accent-wash)}
+table.cmp tr.you td:first-child b{color:var(--accent-2)}
+table.cmp td.rt,table.cmp th.rt{text-align:right;font-variant-numeric:tabular-nums}
+table.cmp tr.catrow td{background:var(--surface-2);font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;padding:7px 13px}
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 16px;align-items:center}
+.fbtn{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--ink-2);background:var(--surface);border:1px solid var(--line-2);border-radius:20px;padding:5px 12px;cursor:pointer}
+.fbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.search{flex:1;min-width:160px;font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:7px 11px}
+.search::placeholder{color:var(--muted)}
+.search:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.appx-note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.bd-add{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 18px}
+.bd-add select,.bd-add input{font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 10px}
+.bd-add select{min-width:200px;flex:1}
+.bd-add input.bd-servings{width:74px;font-variant-numeric:tabular-nums}
+.bd-add select:focus,.bd-add input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.bd-servlbl{font-size:12px;color:var(--muted)}
+.bd-btn{font-family:inherit;font-size:13px;font-weight:600;border-radius:8px;padding:8px 15px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff}
+.bd-btn:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.bd-btn.ghost{background:none;color:var(--ink-2);border-color:var(--line-2)}
+.bd-btn.ghost:hover{border-color:var(--critical);color:var(--critical);background:none}
+.bd-meters{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:0 0 18px}
+@media(max-width:900px){.bd-meters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.bd-meters{grid-template-columns:repeat(2,1fr)}}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 13px;box-shadow:var(--shadow)}
+.meter .ml{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.meter .mv{font-size:21px;font-weight:600;letter-spacing:-.02em;margin:5px 0 0;line-height:1}
+.meter .mv small{font-size:11px;color:var(--ink-2);font-weight:500}
+.meter .mgoal{font-size:10.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace;margin-top:2px}
+.meter .mbar{height:6px;border-radius:4px;background:var(--surface-2);margin-top:9px;overflow:hidden}
+.meter .mfill{height:100%;border-radius:4px;transition:width .35s}
+.bd-qty{width:60px;font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:right;border:1px solid var(--line-2);border-radius:6px;padding:3px 6px;background:var(--surface);color:var(--ink)}
+.bd-remove{cursor:pointer;color:var(--muted);font-weight:700;border:none;background:none;font-size:16px;line-height:1;padding:0 4px}
+.bd-remove:hover{color:var(--critical)}
+.bd-empty{color:var(--muted);padding:20px 13px;font-size:13px}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="mast">
+  <div class="mast-left">
+    <div class="rail"></div>
+    <div>
+      <div class="eyebrow">Nutrition reference</div>
+      <h1>Food Reference &amp; Day Planner</h1>
+      <div class="sub">Common Indian and American foods with serving sizes and macros — plus a per-meal planner that totals a day against your targets.</div>
+    </div>
+  </div>
+  <button class="toggle" id="tgl" aria-label="Toggle color theme">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+    <span id="tgltxt">Theme</span>
+  </button>
+</header>
+
+<section>
+  <div class="sec-head"><h2>Food reference</h2><span class="count" id="food-count"></span></div>
+  <div class="sec-desc">Typical serving sizes with calories, protein, carbs, fibre, sugar and fat. Tap a category or search by name.</div>
+  <div class="filters" id="food-filters"></div>
+  <div class="cmp-wrap"><table class="cmp" id="food-table"></table></div>
+  <div class="appx-note">Protein, carb, fibre, sugar and fat are in <b>grams</b>; kcal is calories. Approximate, rounded, per the serving listed; brand and preparation vary (typical USDA / label values). <b>Net carbs</b> = total carbs − fibre.</div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Build-a-day calculator</h2><span class="count">plan by meal</span></div>
+  <div class="sec-desc">Add foods to breakfast, lunch or dinner, set servings, and it totals every macro per meal and for the whole day against the targets. Saved in this browser only.</div>
+  <div class="bd-add">
+    <select id="bd-meal" aria-label="Meal"><option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="dinner">Dinner</option></select>
+    <select id="bd-food" aria-label="Choose a food"></select>
+    <input class="bd-servings" id="bd-qty" type="number" min="0.25" step="0.25" value="1" aria-label="Servings">
+    <span class="bd-servlbl">servings</span>
+    <button id="bd-addbtn" class="bd-btn" type="button">Add</button>
+    <button id="bd-clear" class="bd-btn ghost" type="button">Clear all</button>
+  </div>
+  <div class="bd-meters" id="bd-meters"></div>
+  <div class="cmp-wrap"><table class="cmp" id="bd-table"></table></div>
+</section>
+
+<footer>
+  Food Reference &amp; Day Planner &middot; values are approximate typical/label figures, rounded &mdash; weigh portions when precision matters. Daily targets: 2,000 kcal, ≥100 g protein, ≤100 g net carbs, ≥38 g fibre, ≤36 g sugar.
+</footer>
+</div>
+
+<script>
+const CATS=["Indian","Protein","Grains","Fruit","Veg","Nuts & fats","Dairy","Snacks & sweets","Drinks"];
+// [name, serving, category, kcal, protein, carb, fibre, sugar, fat]
+const FOODS=[
+ ["Roti / chapati","1 (6\")","Indian",85,3,18,2,0,2],
+ ["Paratha (plain)","1","Indian",180,4,24,3,1,8],
+ ["Naan","1","Indian",260,9,45,2,3,5],
+ ["White rice (cooked)","1 cup","Indian",205,4,45,1,0,0],
+ ["Basmati rice (cooked)","1 cup","Indian",210,4,46,1,0,0],
+ ["Brown rice (cooked)","1 cup","Indian",215,5,45,4,0,2],
+ ["Toor / moong dal (cooked)","1 cup","Indian",200,12,34,8,3,3],
+ ["Rajma (cooked)","1 cup","Indian",220,14,40,13,2,4],
+ ["Chana / chickpeas (cooked)","1 cup","Indian",270,15,45,13,8,4],
+ ["Chana masala","1 cup","Indian",300,12,40,11,8,10],
+ ["Sambar","1 cup","Indian",150,8,22,6,4,4],
+ ["Idli","2","Indian",120,4,26,1,0,1],
+ ["Plain dosa","1","Indian",170,4,28,1,1,5],
+ ["Masala dosa","1","Indian",290,6,40,3,2,12],
+ ["Poha","1 cup","Indian",250,5,45,3,2,8],
+ ["Upma","1 cup","Indian",250,6,40,3,2,8],
+ ["Paneer","100 g","Indian",265,18,4,0,4,21],
+ ["Curd / dahi (whole)","1 cup","Indian",150,8,11,0,11,8],
+ ["Ghee","1 tbsp","Indian",120,0,0,0,0,14],
+ ["Sweet lassi","1 cup","Indian",220,8,34,0,30,5],
+ ["Samosa","1","Indian",260,5,30,3,2,15],
+ ["Pakora","100 g","Indian",315,8,30,4,2,20],
+ ["Gulab jamun","1","Indian",150,2,25,0,22,5],
+ ["Masala chai w/ sugar","1 cup","Indian",90,3,13,0,12,3],
+ ["Butter chicken","1 cup","Indian",430,30,12,2,6,28],
+ ["Palak paneer","1 cup","Indian",300,14,14,4,4,22],
+ ["Chicken breast (cooked)","100 g","Protein",165,31,0,0,0,4],
+ ["Chicken thigh (cooked)","100 g","Protein",210,26,0,0,0,11],
+ ["Salmon (cooked)","100 g","Protein",210,23,0,0,0,13],
+ ["White fish / tilapia","100 g","Protein",130,26,0,0,0,3],
+ ["Shrimp (cooked)","100 g","Protein",100,24,1,0,0,1],
+ ["Egg","1 large","Protein",72,6,0,0,0,5],
+ ["Egg whites","1 cup","Protein",125,26,2,0,2,0],
+ ["Tofu (firm)","100 g","Protein",145,17,3,2,1,8],
+ ["Tempeh","100 g","Protein",190,20,8,0,0,11],
+ ["Greek yogurt (nonfat)","1 cup (170 g)","Protein",100,17,6,0,6,0],
+ ["Whey protein","1 scoop (30 g)","Protein",120,24,3,0,2,2],
+ ["Ground beef 90/10 (cooked)","100 g","Protein",215,26,0,0,0,10],
+ ["Canned tuna (water)","1 can (5 oz)","Protein",130,29,0,0,0,1],
+ ["Lentils (cooked)","1 cup","Protein",230,18,40,16,4,1],
+ ["Cottage cheese (2%)","1 cup","Protein",180,24,8,0,8,5],
+ ["Oatmeal (cooked)","1 cup","Grains",165,6,28,4,1,3],
+ ["Whole-wheat bread","1 slice","Grains",80,4,14,2,2,1],
+ ["White bread","1 slice","Grains",75,2,14,1,2,1],
+ ["Quinoa (cooked)","1 cup","Grains",220,8,39,5,2,4],
+ ["Sweet potato (baked)","1 medium","Grains",105,2,24,4,7,0],
+ ["White potato (baked)","1 medium","Grains",160,4,37,4,2,0],
+ ["Pasta (cooked)","1 cup","Grains",220,8,43,3,2,1],
+ ["Bagel","1 medium","Grains",270,11,53,2,6,2],
+ ["Millet / bajra roti","1","Grains",95,3,18,3,0,2],
+ ["Banana","1 medium","Fruit",105,1,27,3,14,0],
+ ["Apple","1 medium","Fruit",95,0,25,4,19,0],
+ ["Blueberries","1 cup","Fruit",85,1,21,4,15,0],
+ ["Strawberries","1 cup","Fruit",50,1,12,3,7,0],
+ ["Orange","1 medium","Fruit",62,1,15,3,12,0],
+ ["Mango","1 cup","Fruit",100,1,25,3,23,1],
+ ["Grapes","1 cup","Fruit",104,1,27,1,23,0],
+ ["Avocado","1/2","Fruit",160,2,9,7,1,15],
+ ["Broccoli (cooked)","1 cup","Veg",55,4,11,5,2,1],
+ ["Spinach (raw)","2 cups","Veg",15,2,2,1,0,0],
+ ["Mixed salad greens","2 cups","Veg",20,2,4,2,2,0],
+ ["Bell pepper","1","Veg",30,1,7,2,4,0],
+ ["Cauliflower (cooked)","1 cup","Veg",30,2,5,3,2,0],
+ ["Carrots","1 cup","Veg",50,1,12,3,6,0],
+ ["Almonds","28 g (~23)","Nuts & fats",165,6,6,3,1,14],
+ ["Walnuts","28 g","Nuts & fats",185,4,4,2,1,18],
+ ["Cashews","28 g","Nuts & fats",155,5,9,1,2,12],
+ ["Peanut butter","2 tbsp","Nuts & fats",190,8,7,2,3,16],
+ ["Chia seeds","1 tbsp","Nuts & fats",60,2,5,4,0,4],
+ ["Flaxseed (ground)","1 tbsp","Nuts & fats",37,1,2,2,0,3],
+ ["Olive oil","1 tbsp","Nuts & fats",120,0,0,0,0,14],
+ ["Whole milk","1 cup","Dairy",150,8,12,0,12,8],
+ ["2% milk","1 cup","Dairy",120,8,12,0,12,5],
+ ["Cheddar cheese","28 g","Dairy",115,7,1,0,0,9],
+ ["Butter","1 tbsp","Dairy",100,0,0,0,0,11],
+ ["Dark chocolate (70%)","28 g","Snacks & sweets",170,2,13,3,7,12],
+ ["Milk chocolate bar","44 g","Snacks & sweets",235,3,26,1,24,13],
+ ["Cake slice","1 slice","Snacks & sweets",340,4,50,1,35,14],
+ ["Ice cream","1/2 cup","Snacks & sweets",140,2,17,0,14,7],
+ ["Protein bar","1 bar","Snacks & sweets",220,20,22,3,6,7],
+ ["Potato chips","28 g","Snacks & sweets",150,2,15,1,0,10],
+ ["Dried figs","2","Snacks & sweets",45,1,11,2,8,0],
+ ["Ajwa dates","2","Snacks & sweets",45,0,12,1,9,0],
+ ["Black coffee","1 cup","Drinks",2,0,0,0,0,0],
+ ["Red wine","5 oz","Drinks",125,0,4,0,1,0],
+ ["Beer","12 oz","Drinks",155,2,13,0,0,0],
+ ["Orange juice","1 cup","Drinks",110,2,26,0,21,0],
+ ["Coconut water","1 cup","Drinks",45,0,9,0,6,0],
+];
+const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net carbs":{goal:100,dir:"low"},Fibre:{goal:38,dir:"high"},Sugar:{goal:36,dir:"low"}};
+
+// ----- food reference table -----
+(function(){
+  const table=document.getElementById("food-table");
+  const filt=document.getElementById("food-filters");
+  document.getElementById("food-count").textContent=FOODS.length+" foods";
+  let activeCat="All", query="";
+  const cats=["All",...CATS];
+  filt.innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' on':''}" data-cat="${c}">${c}</button>`).join("")
+    +`<input class="search" id="food-search" type="search" placeholder="Search foods…" aria-label="Search foods">`;
+  const head=`<thead><tr><th>Food</th><th>Serving</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Carb</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Fat</th></tr></thead>`;
+  function row(f){return `<tr><td><b>${f[0]}</b></td><td style="color:var(--ink-2)">${f[1]}</td><td class="rt">${f[3]}</td><td class="rt">${f[4]}</td><td class="rt">${f[5]}</td><td class="rt">${f[6]}</td><td class="rt">${f[7]}</td><td class="rt">${f[8]}</td></tr>`;}
+  function render(){
+    let html=head+"<tbody>";
+    const q=query.trim().toLowerCase();
+    if(activeCat==="All" && !q){
+      for(const c of CATS){ const items=FOODS.filter(f=>f[2]===c);
+        html+=`<tr class="catrow"><td colspan="8">${c}</td></tr>`+items.map(row).join(""); }
+    } else {
+      const items=FOODS.filter(f=>(activeCat==="All"||f[2]===activeCat)&&(!q||f[0].toLowerCase().includes(q)));
+      html+= items.length? items.map(row).join("") : `<tr><td colspan="8" style="color:var(--muted);padding:18px 13px">No foods match.</td></tr>`;
+    }
+    table.innerHTML=html+"</tbody>";
+  }
+  filt.querySelectorAll(".fbtn").forEach(b=>b.addEventListener("click",()=>{
+    activeCat=b.dataset.cat; filt.querySelectorAll(".fbtn").forEach(x=>x.classList.toggle("on",x===b)); render();
+  }));
+  filt.querySelector("#food-search").addEventListener("input",e=>{
+    query=e.target.value;
+    if(query.trim()){ activeCat="All"; filt.querySelectorAll(".fbtn").forEach(x=>x.classList.toggle("on",x.dataset.cat==="All")); }
+    render();
+  });
+  render();
+})();
+
+// ----- build-a-day calculator (by meal) -----
+(function(){
+  const sel=document.getElementById("bd-food");
+  const mealSel=document.getElementById("bd-meal");
+  const qtyIn=document.getElementById("bd-qty");
+  const metersEl=document.getElementById("bd-meters");
+  const table=document.getElementById("bd-table");
+  const KEY="fp-buildday-meals";
+  const MEALORD=[["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"]];
+  const METERS=[
+    {k:"Calories",unit:"kcal",val:f=>f[3]},
+    {k:"Protein",unit:"g",val:f=>f[4]},
+    {k:"Net carbs",unit:"g",val:f=>f[5]-f[6]},
+    {k:"Fibre",unit:"g",val:f=>f[6]},
+    {k:"Sugar",unit:"g",val:f=>f[7]},
+    {k:"Fat",unit:"g",val:f=>f[8]},
+  ];
+  let opts="";
+  for(const c of CATS){ opts+=`<optgroup label="${c}">`;
+    FOODS.forEach((f,i)=>{ if(f[2]===c) opts+=`<option value="${i}">${f[0]} — ${f[1]}</option>`; });
+    opts+=`</optgroup>`; }
+  sel.innerHTML=opts;
+  let items=[];
+  try{const s=localStorage.getItem(KEY); if(s) items=JSON.parse(s)||[];}catch(e){}
+  items.forEach(it=>{ if(!it.meal) it.meal="breakfast"; });
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(items));}catch(e){} }
+  const r=(n)=>Math.round(n);
+  function render(){
+    let h=`<thead><tr><th>Food</th><th class="rt">Serv.</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Net C</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Fat</th><th></th></tr></thead><tbody>`;
+    MEALORD.forEach(([mk,ml])=>{
+      h+=`<tr class="catrow"><td colspan="9">${ml}</td></tr>`;
+      const rows=items.map((it,n)=>[it,n]).filter(([it])=>it.meal===mk);
+      if(!rows.length){ h+=`<tr><td colspan="9" class="bd-empty">— nothing added —</td></tr>`; return; }
+      const sub=[0,0,0,0,0,0];
+      rows.forEach(([it,n])=>{
+        const f=FOODS[it.i], q=it.q;
+        const vals=[f[3]*q, f[4]*q, (f[5]-f[6])*q, f[6]*q, f[7]*q, f[8]*q];
+        vals.forEach((v,k)=>sub[k]+=v);
+        h+=`<tr><td><b>${f[0]}</b><br><span style="color:var(--muted);font-size:11px">${f[1]}</span></td>`
+          +`<td class="rt"><input class="bd-qty" type="number" min="0.25" step="0.25" value="${q}" data-n="${n}"></td>`
+          +vals.map(v=>`<td class="rt">${r(v)}</td>`).join("")
+          +`<td class="rt"><button class="bd-remove" data-rm="${n}" aria-label="Remove">×</button></td></tr>`;
+      });
+      h+=`<tr class="you"><td><b>${ml} subtotal</b></td><td></td>`+sub.map(v=>`<td class="rt"><b>${r(v)}</b></td>`).join("")+`<td></td></tr>`;
+    });
+    h+=`</tbody>`;
+    table.innerHTML=h;
+    table.querySelectorAll(".bd-qty").forEach(inp=>inp.addEventListener("input",e=>{
+      const n=+e.target.dataset.n; let v=parseFloat(e.target.value); if(isNaN(v)||v<=0)v=0.25;
+      items[n].q=v; save(); renderMeters();
+    }));
+    table.querySelectorAll(".bd-remove").forEach(b=>b.addEventListener("click",e=>{
+      items.splice(+e.target.dataset.rm,1); save(); render();
+    }));
+    renderMeters();
+  }
+  function renderMeters(){
+    metersEl.innerHTML=METERS.map(m=>{
+      const total=items.reduce((a,it)=>a+m.val(FOODS[it.i])*it.q,0);
+      const tv=Math.round(total); const g=GOALS[m.k];
+      let st="muted", bar=0, goalTxt="no set goal";
+      if(g){ const rr=total/g.goal; goalTxt=(g.dir==="high"?"≥ ":"≤ ")+g.goal;
+        st = total===0 ? "muted" : (g.dir==="high" ? (rr>=1?"good":rr>=0.8?"warning":"serious") : (rr<=1.05?"good":rr<=1.3?"warning":"serious"));
+        bar=Math.max(0,Math.min(100,(g.dir==="high"?rr:Math.min(rr,1))*100));
+      } else { bar=Math.max(0,Math.min(100,total/70*100)); }
+      const col = st==="muted" ? "var(--line-2)" : "var(--"+st+")";
+      return `<div class="meter"><div class="ml">${m.k}</div><div class="mv">${tv}<small> ${m.unit}</small></div>`
+        +`<div class="mgoal">Goal ${goalTxt}</div><div class="mbar"><div class="mfill" style="width:${bar}%;background:${col}"></div></div></div>`;
+    }).join("");
+  }
+  document.getElementById("bd-addbtn").addEventListener("click",()=>{
+    let q=parseFloat(qtyIn.value); if(isNaN(q)||q<=0)q=1;
+    items.push({i:+sel.value,q:q,meal:mealSel.value}); save(); render();
+  });
+  document.getElementById("bd-clear").addEventListener("click",()=>{ items=[]; save(); render(); });
+  render();
+})();
+
+// ----- theme toggle -----
+(function(){
+  const btn=document.getElementById("tgl"), txt=document.getElementById("tgltxt");
+  const root=document.documentElement;
+  function cur(){ if(root.getAttribute("data-theme"))return root.getAttribute("data-theme");
+    return matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"; }
+  function set(t){root.setAttribute("data-theme",t);txt.textContent=t==="dark"?"Light":"Dark";
+    try{localStorage.setItem("fp-theme",t);}catch(e){}}
+  try{const sv=localStorage.getItem("fp-theme");if(sv)root.setAttribute("data-theme",sv);}catch(e){}
+  txt.textContent=cur()==="dark"?"Light":"Dark";
+  btn.addEventListener("click",()=>set(cur()==="dark"?"light":"dark"));
+})();
+</script>
+</body>
+</html>

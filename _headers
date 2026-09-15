@@ -3,3 +3,6 @@
 
 /movies/*
   X-Robots-Tag: noindex, nofollow
+
+/food-planner/*
+  X-Robots-Tag: noindex, nofollow
