@@ -71,6 +71,15 @@ table.cmp tr.catrow td{background:var(--surface-2);font-family:"IBM Plex Mono",m
 .search::placeholder{color:var(--muted)}
 .search:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
 .appx-note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.fbreak{flex-basis:100%;height:0}
+.flab{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.inf{display:inline-flex;align-items:center;gap:4px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;border:1px solid transparent;white-space:nowrap}
+.inf.a{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.inf.p{color:var(--serious);background:color-mix(in srgb,var(--serious) 14%,transparent);border-color:color-mix(in srgb,var(--serious) 32%,transparent)}
+table.cmp td.fa{box-shadow:inset 3px 0 0 var(--good)}
+table.cmp td.fp{box-shadow:inset 3px 0 0 var(--serious)}
+table.cmp td .why{font-size:11px;color:var(--muted);font-weight:400}
+table.cmp td.ct,table.cmp th.ct{text-align:center}
 .bd-add{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 18px}
 .bd-add select,.bd-add input{font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 10px}
 .bd-add select{min-width:200px;flex:1}
@@ -100,6 +109,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-si
 </style>
 </head>
 <body>
+
 <div class="wrap">
 <header class="mast">
   <div class="mast-left">
@@ -118,15 +128,16 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-si
 
 <section>
   <div class="sec-head"><h2>Food reference</h2><span class="count" id="food-count"></span></div>
-  <div class="sec-desc">Typical serving sizes with calories, protein, carbs, fibre, sugar, fat, saturated fat, glycemic index and glycemic load. Tap a category or search by name.</div>
+  <div class="sec-desc">Typical serving sizes with calories, protein, carbs, fibre, sugar, saturated and unsaturated fat, glycemic index, glycemic load and an inflammation rating. Tap a category or search by name.</div>
   <div class="filters" id="food-filters"></div>
   <div class="cmp-wrap"><table class="cmp" id="food-table"></table></div>
-  <div class="appx-note">All macros in <b>grams</b>; kcal is calories. <b>Sat</b> = saturated fat (the fat type that raises LDL — flagged red at ≥5 g); mono/poly-unsaturated fats make up the rest and are the "good" ones. <b>GI</b> (glycemic index, how fast): <span style="color:var(--good);font-weight:600">low ≤55</span> · <span style="color:var(--warning);font-weight:600">med 56–69</span> · <span style="color:var(--serious);font-weight:600">high ≥70</span>. <b>GL</b> (glycemic load, GI × net carbs ÷ 100, impact per serving): <span style="color:var(--good);font-weight:600">low ≤10</span> · <span style="color:var(--warning);font-weight:600">med 11–19</span> · <span style="color:var(--serious);font-weight:600">high ≥20</span>; "—" = negligible carb. Rice &amp; potato are split <b>freshly cooked vs cooked-&amp;-chilled</b> — cooling forms resistant starch that lowers GI even after reheating. Approximate values; brand, variety and prep vary.</div>
+  <div class="appx-note"><b>Inflammation</b> rates each food by the overall evidence on dietary inflammation (Mediterranean-style eating patterns and dietary-inflammatory-index research): <span style="color:var(--good);font-weight:600">✓ Anti</span> — fatty fish, olive oil, nuts, berries, leafy and cruciferous vegetables, legumes, whole grains, coffee and tea; <span style="color:var(--serious);font-weight:600">! Pro</span> — refined flour, added sugar, deep-fried food, processed meat, sugary drinks. Foods with no mark are neutral. It is a shorthand for the pattern, not a verdict on one serving: the overall diet, portions and preparation matter far more than any single food, and a "Pro" food now and then is not a problem.</div>
+  <div class="appx-note">All macros in <b>grams</b>; kcal is calories. <b>Sat fat</b> = saturated fat, the one fat to watch (it raises LDL — flagged red at ≥5 g); total fat itself is left out (it's already in calories). <b>Unsat fat</b> = total fat − saturated (mono + poly, the fats that replace saturated fat well). <b>†</b> marks deep-fried or ultra-processed foods, where that fat comes with heated oil, refined carbs and a lot of calories — don't count it as "good" fat. It isn't a target, so there's no goal or meter for it. <b>GI</b> (glycemic index, how fast): <span style="color:var(--good);font-weight:600">low ≤55</span> · <span style="color:var(--warning);font-weight:600">med 56–69</span> · <span style="color:var(--serious);font-weight:600">high ≥70</span>. <b>GL</b> (glycemic load, GI × net carbs ÷ 100, impact per serving): <span style="color:var(--good);font-weight:600">low ≤10</span> · <span style="color:var(--warning);font-weight:600">med 11–19</span> · <span style="color:var(--serious);font-weight:600">high ≥20</span>; "—" = negligible carb. Rice &amp; potato are split <b>freshly cooked vs cooked-&amp;-chilled</b> — cooling forms resistant starch that lowers GI even after reheating. Approximate values; brand, variety and prep vary.</div>
 </section>
 
 <section>
   <div class="sec-head"><h2>Build-a-day calculator</h2><span class="count">plan by meal</span></div>
-  <div class="sec-desc">Add foods to breakfast, lunch or dinner, set servings, and it totals every macro per meal and for the whole day against the targets. Saved in this browser only.</div>
+  <div class="sec-desc">Add foods to breakfast, lunch or dinner, set servings, and it totals every macro per meal and for the whole day against the targets. Saved in this browser only. <b>Note:</b> the sugar meter counts <em>all</em> sugars, including the natural ones in fruit and dairy — the ≤36 g target is really an added-sugar limit, so fruit and dahi will read higher than they should.</div>
   <div class="bd-add">
     <select id="bd-meal" aria-label="Meal"><option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="dinner">Dinner</option></select>
     <select id="bd-food" aria-label="Choose a food"></select>
@@ -140,7 +151,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-si
 </section>
 
 <footer>
-  Food Reference &amp; Day Planner &middot; values are approximate typical/label figures, rounded &mdash; weigh portions when precision matters. Daily targets: 2,000 kcal, ≥100 g protein, ≤100 g net carbs, ≥38 g fibre, ≤36 g sugar.
+  Food Reference &amp; Day Planner &middot; values are approximate typical/label figures, rounded &mdash; weigh portions when precision matters. Daily targets: 2,000 kcal, ≥100 g protein, ≤100 g net carbs, ≥38 g fibre, ≤36 g sugar (an added-sugar guide), ≤13 g saturated fat.
 </footer>
 </div>
 
@@ -167,7 +178,9 @@ const FOODS=[
  ["Poha","1 cup","Indian",250,5,45,3,2,8,70,1],
  ["Upma","1 cup","Indian",250,6,40,3,2,8,65,1.5],
  ["Paneer","100 g","Indian",265,18,4,0,4,21,null,13],
+ ["Paneer (low-fat)","100 g","Indian",185,20,4,0,3,10,null,6],
  ["Curd / dahi (whole)","1 cup","Indian",150,8,11,0,11,8,20,5],
+ ["Curd / dahi (low-fat)","1 cup","Indian",105,9,12,0,11,2.5,20,1.5],
  ["Ghee","1 tbsp","Indian",120,0,0,0,0,14,null,9],
  ["Sweet lassi","1 cup","Indian",220,8,34,0,30,5,40,3],
  ["Samosa","1","Indian",260,5,30,3,2,15,45,4],
@@ -181,7 +194,7 @@ const FOODS=[
  ["Salmon (cooked)","100 g","Protein",210,23,0,0,0,13,null,3],
  ["White fish / tilapia","100 g","Protein",130,26,0,0,0,3,null,1],
  ["Shrimp (cooked)","100 g","Protein",100,24,1,0,0,1,null,0],
- ["Egg","1 large","Protein",72,6,0,0,0,5,null,2],
+ ["Egg","1 large","Protein",72,6,0,0,0,5,null,1.6],
  ["Egg whites","1 cup","Protein",125,26,2,0,2,0,null,0],
  ["Tofu (firm)","100 g","Protein",145,17,3,2,1,8,15,1],
  ["Tempeh","100 g","Protein",190,20,8,0,0,11,15,2],
@@ -215,6 +228,9 @@ const FOODS=[
  ["Bell pepper","1","Veg",30,1,7,2,4,0,15,0],
  ["Cauliflower (cooked)","1 cup","Veg",30,2,5,3,2,0,15,0],
  ["Carrots","1 cup","Veg",50,1,12,3,6,0,39,0],
+ ["Cabbage (raw)","1 cup shredded","Veg",22,1,5,2,3,0,10,0],
+ ["Onion (chopped)","1/2 cup","Veg",32,1,7,1,3,0,10,0],
+ ["Mixed vegetables (cooked)","1 cup","Veg",80,4,16,6,5,0,40,0],
  ["Almonds","28 g (~23)","Nuts & fats",165,6,6,3,1,14,15,1],
  ["Walnuts","28 g","Nuts & fats",185,4,4,2,1,18,15,2],
  ["Cashews","28 g","Nuts & fats",155,5,9,1,2,12,25,2],
@@ -239,41 +255,162 @@ const FOODS=[
  ["Beer","12 oz","Drinks",155,2,13,0,0,0,null,0],
  ["Orange juice","1 cup","Drinks",110,2,26,0,21,0,50,0],
  ["Coconut water","1 cup","Drinks",45,0,9,0,6,0,55,0],
+ ["Dal makhani","1 cup","Indian",330,12,30,9,3,18,29,9],
+ ["Chicken biryani","1 cup","Indian",350,18,40,2,2,13,58,4],
+ ["Aloo gobi","1 cup","Indian",200,5,22,5,5,11,58,2],
+ ["Raita","1/2 cup","Indian",60,3,6,1,5,3,25,2],
+ ["Khichdi","1 cup","Indian",250,10,40,5,2,6,60,2],
+ ["Aloo paratha","1","Indian",280,6,36,4,2,12,65,4],
+ ["Dhokla","2 pieces","Indian",160,6,24,2,3,5,35,1],
+ ["Turkey breast (cooked)","100 g","Protein",135,30,0,0,0,1,null,0],
+ ["Bacon","2 slices","Protein",90,6,0,0,0,7,null,3],
+ ["Edamame","1 cup","Protein",190,17,15,8,3,8,18,1],
+ ["Toast (whole-wheat)","1 slice","Grains",80,4,14,2,2,1,70,0],
+ ["Breakfast cereal (corn flakes)","1 cup","Grains",100,2,24,1,3,0,81,0],
+ ["Granola","1/2 cup","Grains",230,5,32,4,12,9,50,2],
+ ["Pancake","1 (4\")","Grains",90,2,15,1,3,3,66,1],
+ ["Pear","1 medium","Fruit",100,1,27,6,17,0,38,0],
+ ["Pineapple","1 cup","Fruit",83,1,22,2,16,0,66,0],
+ ["Watermelon","1 cup","Fruit",46,1,12,1,9,0,72,0],
+ ["Raspberries","1 cup","Fruit",65,1,15,8,6,1,32,0],
+ ["Pomegranate","1/2 cup","Fruit",72,1,16,3,12,1,53,0],
+ ["Raisins","1/4 cup","Fruit",108,1,29,1,21,0,64,0],
+ ["Tomato","1 medium","Veg",22,1,5,1,3,0,15,0],
+ ["Cucumber","1 cup","Veg",16,1,4,1,2,0,15,0],
+ ["Okra / bhindi (cooked)","1 cup","Veg",35,2,7,3,3,0,20,0],
+ ["Green peas (cooked)","1 cup","Veg",120,8,21,7,8,0,51,0],
+ ["Sweet corn","1 cup","Veg",130,5,29,4,6,2,52,0],
+ ["Mushrooms (cooked)","1 cup","Veg",40,3,8,3,3,0,15,0],
+ ["Pistachios","28 g","Nuts & fats",160,6,8,3,2,13,15,2],
+ ["Peanuts","28 g","Nuts & fats",165,7,6,2,1,14,14,2],
+ ["Hummus","2 tbsp","Nuts & fats",70,2,6,2,0,5,15,1],
+ ["1% milk","1 cup","Dairy",105,8,12,0,12,2.5,32,1.5],
+ ["Yogurt (plain, whole)","1 cup","Dairy",150,8,11,0,11,8,36,5],
+ ["Mozzarella","28 g","Dairy",85,6,1,0,0,6,null,4],
+ ["Almond milk (unsweetened)","1 cup","Dairy",30,1,1,1,0,2.5,25,0],
+ ["Honey","1 tbsp","Snacks & sweets",64,0,17,0,17,0,58,0],
+ ["Sugar (white)","1 tsp","Snacks & sweets",16,0,4,0,4,0,65,0],
+ ["Pizza slice","1 slice","Snacks & sweets",285,12,36,2,4,10,60,5],
+ ["Popcorn (air-popped)","3 cups","Snacks & sweets",90,3,18,4,0,1,65,0],
+ ["Cookie","1","Snacks & sweets",150,2,20,1,12,7,60,3],
+ ["Green tea","1 cup","Drinks",2,0,0,0,0,0,null,0],
+ ["Cola / soda","1 can (12 oz)","Drinks",140,0,39,0,39,0,63,0],
+ ["Chai — 1% milk, no sugar","1 cup","Drinks",21,2,2,0,2,0.5,30,0.3],
 ];
-const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net carbs":{goal:100,dir:"low"},Fibre:{goal:38,dir:"high"},Sugar:{goal:36,dir:"low"}};
+const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net carbs":{goal:100,dir:"low"},Fibre:{goal:38,dir:"high"},Sugar:{goal:36,dir:"low"},"Sat fat":{goal:13,dir:"low"}};
 
 // ----- food reference table -----
+// Inflammation rating. A = anti-inflammatory, P = pro-inflammatory; anything not listed is neutral. [rating, why]
+const INFLAM={
+ "Toor / moong dal (cooked)":["A","legume: fibre and polyphenols"],
+ "Rajma (cooked)":["A","legume: fibre and polyphenols"],
+ "Chana / chickpeas (cooked)":["A","legume: fibre and polyphenols"],
+ "Chana masala":["A","chickpeas with turmeric, ginger, garlic"],
+ "Sambar":["A","lentils, vegetables and turmeric"],
+ "Millet / bajra roti":["A","whole grain, high fibre"],
+ "Salmon (cooked)":["A","omega-3 EPA/DHA"],
+ "Lentils (cooked)":["A","legume: fibre and polyphenols"],
+ "Edamame":["A","soy legume: fibre, isoflavones"],
+ "Oatmeal (cooked)":["A","beta-glucan whole grain"],
+ "Blueberries":["A","anthocyanins"],
+ "Strawberries":["A","anthocyanins"],
+ "Raspberries":["A","polyphenols and fibre"],
+ "Apple":["A","quercetin and fibre"],
+ "Orange":["A","vitamin C and flavonoids"],
+ "Pomegranate":["A","polyphenols"],
+ "Avocado":["A","monounsaturated fat and fibre"],
+ "Broccoli (cooked)":["A","cruciferous: sulforaphane"],
+ "Spinach (raw)":["A","leafy green: vitamins, polyphenols"],
+ "Mixed salad greens":["A","leafy greens"],
+ "Bell pepper":["A","vitamin C and carotenoids"],
+ "Cauliflower (cooked)":["A","cruciferous vegetable"],
+ "Cabbage (raw)":["A","cruciferous: glucosinolates"],
+ "Onion (chopped)":["A","quercetin"],
+ "Tomato":["A","lycopene"],
+ "Mixed vegetables (cooked)":["A","vegetables: fibre and antioxidants"],
+ "Almonds":["A","vitamin E, monounsaturated fat"],
+ "Walnuts":["A","ALA omega-3"],
+ "Pistachios":["A","polyphenols and fibre"],
+ "Chia seeds":["A","ALA omega-3 and fibre"],
+ "Flaxseed (ground)":["A","ALA omega-3 and lignans"],
+ "Olive oil":["A","monounsaturated fat, oleocanthal"],
+ "Hummus":["A","chickpeas with olive oil"],
+ "Dark chocolate (70%)":["A","cocoa flavanols"],
+ "Black coffee":["A","polyphenols"],
+ "Green tea":["A","EGCG catechins"],
+ "Naan":["P","refined flour, high GI"],
+ "Samosa":["P","deep-fried, refined flour"],
+ "Pakora":["P","deep-fried"],
+ "Gulab jamun":["P","deep-fried, in sugar syrup"],
+ "Sweet lassi":["P","added sugar"],
+ "Bacon":["P","processed meat"],
+ "White bread":["P","refined flour, high GI"],
+ "Bagel":["P","refined flour, high GI"],
+ "Breakfast cereal (corn flakes)":["P","refined grain, high GI"],
+ "Pancake":["P","refined flour and syrup"],
+ "Milk chocolate bar":["P","added sugar"],
+ "Cake slice":["P","refined flour, added sugar"],
+ "Ice cream":["P","added sugar, ultra-processed"],
+ "Potato chips":["P","fried, ultra-processed"],
+ "Cookie":["P","refined flour, added sugar"],
+ "Pizza slice":["P","refined flour, processed toppings (varies)"],
+ "Honey":["P","added sugar"],
+ "Sugar (white)":["P","added sugar"],
+ "Cola / soda":["P","sugar-sweetened drink"],
+};
 (function(){
   const table=document.getElementById("food-table");
   const filt=document.getElementById("food-filters");
-  document.getElementById("food-count").textContent=FOODS.length+" foods";
-  let activeCat="All", query="";
+  const cnt=document.getElementById("food-count");
+  if(!table)return;
+  let activeCat="All", activeInf="All", query="";
   const cats=["All",...CATS];
+  const infs=[["All","Any effect"],["A","✓ Anti-inflammatory"],["P","! Pro-inflammatory"]];
   filt.innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' on':''}" data-cat="${c}">${c}</button>`).join("")
+    +`<span class="fbreak"></span><span class="flab">Inflammation</span>`
+    +infs.map(([k,l],i)=>`<button class="fbtn${i===0?' on':''}" data-inf="${k}">${l}</button>`).join("")
     +`<input class="search" id="food-search" type="search" placeholder="Search foods…" aria-label="Search foods">`;
-  const head=`<thead><tr><th>Food</th><th>Serving</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Carb</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Fat</th><th class="rt">Sat</th><th class="rt">GI</th><th class="rt">GL</th></tr></thead>`;
+  const head=`<thead><tr><th>Food</th><th>Serving</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Carb</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Sat fat</th><th class="rt">Unsat fat</th><th class="rt">GI</th><th class="rt">GL</th><th class="ct">Inflammation</th></tr></thead>`;
   function giCell(g){ if(g==null) return '<span style="color:var(--muted)">—</span>'; const c=g<=55?'good':g<=69?'warning':'serious'; return `<span style="color:var(--${c});font-weight:600">${g}</span>`; }
   function glCell(g){ if(g==null) return '<span style="color:var(--muted)">—</span>'; const c=g<=10?'good':g<=19?'warning':'serious'; return `<span style="color:var(--${c});font-weight:600">${g}</span>`; }
   function satCell(s){ if(s==null||s===0) return '<span style="color:var(--muted)">0</span>'; return s>=5?`<span style="color:var(--serious);font-weight:600">${s}</span>`:`${s}`; }
-  function row(f){const net=f[5]-f[6]; const gl=f[9]==null?null:Math.round(f[9]*net/100); return `<tr><td><b>${f[0]}</b></td><td style="color:var(--ink-2)">${f[1]}</td><td class="rt">${f[3]}</td><td class="rt">${f[4]}</td><td class="rt">${f[5]}</td><td class="rt">${f[6]}</td><td class="rt">${f[7]}</td><td class="rt">${f[8]}</td><td class="rt">${satCell(f[10])}</td><td class="rt">${giCell(f[9])}</td><td class="rt">${glCell(gl)}</td></tr>`;}
+  const FRIED=new Set(["Samosa","Pakora","Gulab jamun","Potato chips","Cookie","Cake slice","Pizza slice"]);
+  function unsCell(f){ const u=Math.max(0,+(f[8]-f[10]).toFixed(1)); if(u===0) return '<span style="color:var(--muted)">0</span>'; return FRIED.has(f[0])?`<span style="color:var(--muted)" title="Deep-fried or ultra-processed: not a source of good fat">${u}†</span>`:`${u}`; }
+  function infCell(f){ const e=INFLAM[f[0]]; if(!e) return '<span style="color:var(--muted)">—</span>';
+    return e[0]==="A"?`<span class="inf a" title="${e[1]}">✓ Anti</span>`:`<span class="inf p" title="${e[1]}">! Pro</span>`; }
+  function row(f){
+    const net=f[5]-f[6]; const gl=f[9]==null?null:Math.round(f[9]*net/100);
+    const e=INFLAM[f[0]]; const cls=e?(e[0]==="A"?' class="fa"':' class="fp"'):'';
+    const why=e?`<br><span class="why">${e[1]}</span>`:'';
+    return `<tr><td${cls}><b>${f[0]}</b>${why}</td><td style="color:var(--ink-2)">${f[1]}</td><td class="rt">${f[3]}</td><td class="rt">${f[4]}</td><td class="rt">${f[5]}</td><td class="rt">${f[6]}</td><td class="rt">${f[7]}</td><td class="rt">${satCell(f[10])}</td><td class="rt">${unsCell(f)}</td><td class="rt">${giCell(f[9])}</td><td class="rt">${glCell(gl)}</td><td class="ct">${infCell(f)}</td></tr>`;
+  }
+  const passInf=f=>activeInf==="All"||(INFLAM[f[0]]&&INFLAM[f[0]][0]===activeInf);
   function render(){
-    let html=head+"<tbody>";
+    let html=head+"<tbody>", shown=0;
     const q=query.trim().toLowerCase();
     if(activeCat==="All" && !q){
-      for(const c of CATS){ const items=FOODS.filter(f=>f[2]===c);
-        html+=`<tr class="catrow"><td colspan="11">${c}</td></tr>`+items.map(row).join(""); }
+      for(const c of CATS){
+        const items=FOODS.filter(f=>f[2]===c&&passInf(f)); if(!items.length) continue;
+        shown+=items.length;
+        html+=`<tr class="catrow"><td colspan="12">${c}</td></tr>`+items.map(row).join("");
+      }
     } else {
-      const items=FOODS.filter(f=>(activeCat==="All"||f[2]===activeCat)&&(!q||f[0].toLowerCase().includes(q)));
-      html+= items.length? items.map(row).join("") : `<tr><td colspan="11" style="color:var(--muted);padding:18px 13px">No foods match.</td></tr>`;
+      const items=FOODS.filter(f=>(activeCat==="All"||f[2]===activeCat)&&(!q||f[0].toLowerCase().includes(q))&&passInf(f));
+      shown=items.length; html+=items.map(row).join("");
     }
+    if(!shown) html+=`<tr><td colspan="12" style="color:var(--muted);padding:18px 13px">No foods match.</td></tr>`;
     table.innerHTML=html+"</tbody>";
+    cnt.textContent = (shown===FOODS.length)?FOODS.length+" foods":shown+" of "+FOODS.length+" foods";
   }
-  filt.querySelectorAll(".fbtn").forEach(b=>b.addEventListener("click",()=>{
-    activeCat=b.dataset.cat; filt.querySelectorAll(".fbtn").forEach(x=>x.classList.toggle("on",x===b)); render();
+  filt.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{
+    activeCat=b.dataset.cat; filt.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("on",x===b)); render();
+  }));
+  filt.querySelectorAll("[data-inf]").forEach(b=>b.addEventListener("click",()=>{
+    activeInf=b.dataset.inf; filt.querySelectorAll("[data-inf]").forEach(x=>x.classList.toggle("on",x===b)); render();
   }));
   filt.querySelector("#food-search").addEventListener("input",e=>{
     query=e.target.value;
-    if(query.trim()){ activeCat="All"; filt.querySelectorAll(".fbtn").forEach(x=>x.classList.toggle("on",x.dataset.cat==="All")); }
+    if(query.trim()){ activeCat="All"; filt.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("on",x.dataset.cat==="All")); }
     render();
   });
   render();
@@ -294,7 +431,7 @@ const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net c
     {k:"Net carbs",unit:"g",val:f=>f[5]-f[6]},
     {k:"Fibre",unit:"g",val:f=>f[6]},
     {k:"Sugar",unit:"g",val:f=>f[7]},
-    {k:"Fat",unit:"g",val:f=>f[8]},
+    {k:"Sat fat",unit:"g",val:f=>f[10]},
   ];
   let opts="";
   for(const c of CATS){ opts+=`<optgroup label="${c}">`;
@@ -307,7 +444,7 @@ const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net c
   function save(){ try{localStorage.setItem(KEY,JSON.stringify(items));}catch(e){} }
   const r=(n)=>Math.round(n);
   function render(){
-    let h=`<thead><tr><th>Food</th><th class="rt">Serv.</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Net C</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Fat</th><th></th></tr></thead><tbody>`;
+    let h=`<thead><tr><th>Food</th><th class="rt">Serv.</th><th class="rt">kcal</th><th class="rt">Protein</th><th class="rt">Net C</th><th class="rt">Fibre</th><th class="rt">Sugar</th><th class="rt">Sat</th><th></th></tr></thead><tbody>`;
     MEALORD.forEach(([mk,ml])=>{
       h+=`<tr class="catrow"><td colspan="9">${ml}</td></tr>`;
       const rows=items.map((it,n)=>[it,n]).filter(([it])=>it.meal===mk);
@@ -315,7 +452,7 @@ const GOALS={Calories:{goal:2000,dir:"low"},Protein:{goal:100,dir:"high"},"Net c
       const sub=[0,0,0,0,0,0];
       rows.forEach(([it,n])=>{
         const f=FOODS[it.i], q=it.q;
-        const vals=[f[3]*q, f[4]*q, (f[5]-f[6])*q, f[6]*q, f[7]*q, f[8]*q];
+        const vals=[f[3]*q, f[4]*q, (f[5]-f[6])*q, f[6]*q, f[7]*q, f[10]*q];
         vals.forEach((v,k)=>sub[k]+=v);
         h+=`<tr><td><b>${f[0]}</b><br><span style="color:var(--muted);font-size:11px">${f[1]}</span></td>`
           +`<td class="rt"><input class="bd-qty" type="number" min="0.25" step="0.25" value="${q}" data-n="${n}"></td>`
