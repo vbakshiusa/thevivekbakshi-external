@@ -39,6 +39,7 @@
     --c-consumer:#4A7A6E;
     --c-agentfw:#3E7A6B;
     --c-cua:#8C6B3E;
+    --c-systemone:#6E5A9E;
   }
 
   @media (prefers-color-scheme: dark){
@@ -79,6 +80,7 @@
       --c-consumer:#8FC7B8;
       --c-agentfw:#7ECBB8;
       --c-cua:#D4B27C;
+      --c-systemone:#B0A0DE;
     }
   }
   :root[data-theme="dark"]{
@@ -117,6 +119,7 @@
     --c-consumer:#8FC7B8;
     --c-agentfw:#7ECBB8;
     --c-cua:#D4B27C;
+    --c-systemone:#B0A0DE;
   }
 
   *{box-sizing:border-box;}
@@ -221,6 +224,30 @@
     white-space:nowrap;
   }
 
+  /* ---------- Category nav ---------- */
+  nav.toc{
+    margin-top:20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  nav.toc a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-decoration:none;
+    color:var(--ink-soft);
+    background:var(--surface);
+    padding:7px 13px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible{
+    border-color:var(--accent);
+    color:var(--ink);
+    outline:none;
+  }
+
   /* ---------- Section heads ---------- */
   .section-head{
     margin:52px 0 16px;
@@ -229,6 +256,7 @@
     justify-content:space-between;
     gap:16px;
     flex-wrap:wrap;
+    scroll-margin-top:20px;
   }
   .section-head h2{
     font-family:'Fraunces', serif;
@@ -473,7 +501,18 @@
     </div>
   </div>
 
-  <div class="section-head">
+  <nav class="toc" aria-label="Jump to category">
+    <a href="#tier-matrix">Tier matrix</a>
+    <a href="#voice-live">Real-time voice</a>
+    <a href="#system-one">System One models</a>
+    <a href="#enterprise-ide">Enterprise &amp; IDE</a>
+    <a href="#model-routers">Model routers</a>
+    <a href="#computer-use">Computer-use agents</a>
+    <a href="#always-on">Always-on agents</a>
+    <a href="#consumer">Consumer assistants</a>
+  </nav>
+
+  <div class="section-head" id="tier-matrix">
     <h2>Tier matrix</h2>
     <div class="axis">cheap / fast <span class="arrow">&rarr;</span> expensive / deep-thinking</div>
   </div>
@@ -700,7 +739,7 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="voice-live">
     <h2>Real-time voice &amp; live models</h2>
   </div>
   <p class="section-sub">Speech-in, speech-out models built for conversation — they listen and answer while you're still mid-thought, instead of transcribing, thinking, then reading a reply aloud. The pick for voice agents, phone bots, and hands-free assistants.</p>
@@ -788,7 +827,45 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="system-one">
+    <h2>System One models</h2>
+  </div>
+  <p class="section-sub">A different shape of model entirely — no prose in or out. You send text plus typed questions (a multiple choice, a 1&ndash;10 score, a yes/no), and it answers with calibrated probabilities in one parallel pass instead of generating tokens one at a time. Built for classification, routing, and guardrail decisions sitting in front of — or instead of — a chat model.</p>
+
+  <div class="table-wrap">
+    <table class="enterprise">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th class="tier-head">What it does</th>
+          <th class="tier-head">Access</th>
+          <th class="tier-head">Note</th>
+        </tr>
+      </thead>
+      <tbody style="--co:var(--c-systemone)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Jev 1.13</div><div class="co-line">TypeSafe AI · Sept 2026</div></th>
+          <td class="ent-models">Reads a block of text or JSON, evaluates every typed question against it at once (Choice, Score, or Noul for a binary probability), and returns calibrated answers in 70&ndash;500ms.</td>
+          <td class="ent-pick">Hosted API<br>$0.042 / 1M input tokens, output free</td>
+          <td class="ent-why">TypeSafe's own benchmark claims 193.6&times; faster and 444.6&times; cheaper than an LLM on the same classification or routing task.
+            <a href="https://www.marktechpost.com/2026/09/19/typesafe-ai-releases-jev/" target="_blank" rel="noopener">marktechpost.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody style="--co:var(--c-systemone)">
+        <tr>
+          <th class="co-cell"><div class="co-name">Laya</div><div class="co-line">Convai Innovations · open weight</div></th>
+          <td class="ent-models">The open alternative to Jev — same typed Choice/Score/Noul primitives, 421M parameters, Apache 2.0.</td>
+          <td class="ent-pick">Self-hosted<br>your own GPU or CPU, no per-request cost</td>
+          <td class="ent-why">Its own model card claims 7.8&times; faster than Jev; the pick when you don't want a hosted dependency on the decision layer in front of your app.
+            <a href="https://adevguide.com/ai-engineering/llm-agents/what-is-laya-ai-open-source-system-one-model/" target="_blank" rel="noopener">adevguide.com &rarr;</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head" id="enterprise-ide">
     <h2>Enterprise &amp; IDE picks</h2>
   </div>
   <p class="section-sub">These coding tools let you choose the engine underneath. Here's what's actually on the menu in each, and what reviewers currently point to.</p>
@@ -906,7 +983,7 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="model-routers">
     <h2>Model routers</h2>
   </div>
   <p class="section-sub">A different category from the harnesses above — you don't pick the model here, the router does, per request, based on the prompt itself.</p>
@@ -964,7 +1041,7 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="computer-use">
     <h2>Computer-use &amp; browser agents</h2>
   </div>
   <p class="section-sub">A model actually operating a screen — reading pixels or the accessibility tree, then clicking, typing, and scrolling like a person would. On-demand, inside a session you're watching, rather than running unattended in the background.</p>
@@ -1012,7 +1089,7 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="always-on">
     <h2>Always-on agents</h2>
   </div>
   <p class="section-sub">A different job from a router or an IDE plugin — this is an agent that runs continuously on its own hardware and takes action without being asked each time. Hermes and OpenClaw do it self-hosted and model-neutral; Grok Bot and Meta's Muse do the same job as locked-in hosted services.</p>
@@ -1070,7 +1147,7 @@
     </table>
   </div>
 
-  <div class="section-head">
+  <div class="section-head" id="consumer">
     <h2>Consumer &amp; embedded assistants</h2>
   </div>
   <p class="section-sub">Assistants that answer inside an app you're already in — a social feed, an inbox, an office suite — rather than a coding tool, an API call, a browser agent, or an always-on background agent.</p>
@@ -1187,6 +1264,8 @@
       <a href="https://codersera.com/blog/qwen-3-8-27b-complete-guide-2026/">codersera.com/qwen-3.8-27b</a>
       <a href="https://www.mindstudio.ai/blog/qwen-3-8-max-benchmarks-explained">mindstudio.ai/qwen-3.8-max</a>
       <a href="https://releasebot.io/updates/mistral">releasebot.io/mistral</a>
+      <a href="https://www.marktechpost.com/2026/09/19/typesafe-ai-releases-jev/">marktechpost.com/jev</a>
+      <a href="https://adevguide.com/ai-engineering/llm-agents/what-is-laya-ai-open-source-system-one-model/">adevguide.com/laya</a>
     </div>
   </footer>
 
